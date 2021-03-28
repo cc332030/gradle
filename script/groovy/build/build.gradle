@@ -1,0 +1,86 @@
+def versions = rootProject.ext.versions
+
+buildscript {
+
+  apply from: 'config.gradle'
+
+  versions = rootProject.ext.versions
+
+  repositories {
+    maven {
+      url 'https://nexus.local.c332030.com/repository/maven-public/'
+    }
+  }
+}
+
+subprojects {
+
+  apply plugin: 'java-library'
+  apply plugin: 'maven-publish'
+
+  group = rootProject.ext.group
+  version = rootProject.ext.version
+
+  sourceCompatibility = JavaVersion.VERSION_11
+  sourceCompatibility = JavaVersion.VERSION_11
+
+  [compileJava, compileTestJava, javadoc]*.options*.encoding = rootProject.ext.charset
+
+  jar.enabled = true
+
+  java {
+    withJavadocJar()
+    withSourcesJar()
+  }
+
+  repositories {
+    maven {
+      url 'https://nexus.local.c332030.com/repository/maven-public/'
+    }
+  }
+
+  publishing {
+    publications {
+      maven(MavenPublication) {
+        // groupId project.group
+        // artifactId project.name
+        // version project.version
+        from components.java
+      }
+    }
+
+    repositories {
+      maven {
+        def releasesRepoUrl = "https://nexus.local.c332030.com/repository/maven-releases/"
+        def snapshotsRepoUrl = "https://nexus.local.c332030.com/repository/maven-snapshots/"
+        url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+
+        credentials {
+          username 'admin'
+          password '123456'
+        }
+      }
+    }
+  }
+
+  dependencies {
+
+    testImplementation group: 'junit', name: 'junit', version: versions.junit
+
+    // lombok
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: versions.lombok
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: versions.lombok
+
+    testCompileOnly group: 'org.projectlombok', name: 'lombok', version: versions.lombok
+    testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: versions.lombok
+
+  }
+
+// 测试配置
+  test {
+    // include '**/Test*.class'
+
+    exclude '**/*Test*.class'
+  }
+
+}

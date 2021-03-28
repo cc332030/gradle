@@ -1,0 +1,28 @@
+
+# dependencies
+node_modules
+
+# testing
+
+
+# production
+target
+
+# Project Files
+.idea
+*.iml
+
+.project
+.classpath
+
+# Log
+*.log*
+
+# misc
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# executable file
+package

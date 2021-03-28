@@ -1,0 +1,27 @@
+
+= gradle link
+
+== windows
+[source,cmd]
+----
+@echo off
+
+set oldApp=%~dp0app
+
+echo.
+set /p newApp=请选择 gradle 解压路径：
+
+echo.
+rd /s /q %oldApp%
+mklink /d %oldApp% %newApp%
+
+set oldData=%userprofile%\.gradle
+set newData=%~dp0data
+
+echo.
+rd /s /q %oldData%
+mklink /d %oldData% %newData%
+
+pause >nul
+
+----

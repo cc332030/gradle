@@ -1,0 +1,5 @@
+
+// 操排除资源文件
+processResources {
+  exclude { "**/*.*" }
+}

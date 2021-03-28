@@ -1,0 +1,33 @@
+
+// ext.group = 'com.c332030.common'
+
+ext {
+
+  group = 'com.c332030.common'
+  name = 'common-java'
+  version = '0.0.1-SNAPSHOT'
+
+  charset = 'utf-8'
+
+  versions = [
+    spring_boot_version: '2.2.6.RELEASE'
+
+    , mybatis_starter: '2.1.1'
+    , mapper_starter: '2.1.5'
+    , pagehelper_starter: '1.2.13'
+
+    , apache_commons_lang3: '3.9'
+    , apache_commons_collections: '4.4'
+    , apache_commons_io: '2.6'
+
+    , google_gson: '2.8.6'
+    , google_guava: '29.0-jre'
+
+    , reflections: '0.9.12'
+
+    , junit: '4.12'
+    , lombok: '1.18.12'
+
+    , logback: '1.2.3'
+  ]
+}

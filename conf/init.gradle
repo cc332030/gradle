@@ -1,0 +1,8 @@
+
+allprojects {
+    repositories {
+      maven {
+        url 'https://nexus.local.c332030.com/repository/maven-public/'
+      }
+    }
+}
