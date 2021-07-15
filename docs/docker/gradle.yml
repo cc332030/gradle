@@ -1,0 +1,14 @@
+
+name: gradle
+
+on: push
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: cc332030/alpine-git-ssh@master
+        timeout-minutes: 2
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      - run: ${{ secrets.GRADLE_PUBLISH_COMMAND }} "git@github.com:${{github.repository}}" > /dev/null 2>&1
