@@ -5,6 +5,6 @@ GRADLE_PUBLISH_COMMAND
 
 [source,shell script]
 ----
-ssh -p 29971 root@144.34.162.25 bash /home/program/gradle/docker-publish.sh
+ssh -p 22 root@127.0.0.1 bash /gradle/docker-publish.sh "git@github.com:$GITHUB_REPOSITORY"
 
 ----
