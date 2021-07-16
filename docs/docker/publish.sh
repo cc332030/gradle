@@ -1,24 +1,23 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 set -e
 
-ln -s /home/.gnupg ~/.gnupg
-ln -s /home/.gradle ~/.gradle
-
-cp -r /home/.ssh ~/.ssh
-chmod -R 700 ~/.ssh
+#git_url=git@github.com:cc332030/c-commons-java.git
+git_url="$1"
+branch="$2"
 
 # shellcheck disable=SC2154
-echo "git_url: ${git_url}"
+echo "git_url: ${git_url} -b ${branch}"
 
-work_dir=/tmp/gradle
+work_dir="/tmp/gradle/$(date +%N)"
 echo "work_dir: ${work_dir}"
 
+mkdir -p "${work_dir}"
 cd "${work_dir}"
 
-git clone --depth=1 "${git_url}" source
+git clone --depth=1 "${git_url}" .
 
-cd source
 chmod +x gradlew
-
 ./gradlew publish
+
+rm -rf "${work_dir}"

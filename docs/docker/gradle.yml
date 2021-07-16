@@ -1,5 +1,5 @@
 
-name: gradle
+name: mirror
 
 on: push
 
@@ -7,8 +7,8 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - uses: cc332030/alpine-git-ssh@master
+      - uses: cc332030/git-mirror-action@github
         timeout-minutes: 2
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      - run: ${{ secrets.GRADLE_PUBLISH_COMMAND }} "git@github.com:${{github.repository}}" > /dev/null 2>&1
+          COMMAND: ${{ secrets.GRADLE_PUBLISH_COMMAND }}
