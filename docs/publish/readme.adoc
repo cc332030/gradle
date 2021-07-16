@@ -1,5 +1,7 @@
 
-= gradle docker
+= gradle publish
+
+代码同步后执行部署操作
 
 GRADLE_PUBLISH_COMMAND
 
