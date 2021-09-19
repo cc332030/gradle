@@ -1,0 +1,24 @@
+
+= INIT_GRADLE
+
+[source,shell script]
+----
+curl -s -O https://raw.githubusercontent.com/cc332030/gradle/master/script/init-gradle/init-gradle.sh && sh init-gradle.sh
+
+----
+
+[source,yml]
+----
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: init gradle
+        run: ${{ secrets.INIT_GRADLE }}
+        env:
+          GPG_SIGN_KEY: ${{ secrets.GPG_SIGN_KEY }}
+          GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
+          OSSRH_USERNAME: ${{ secrets.USER }}
+          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+
+----
