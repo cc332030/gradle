@@ -2,7 +2,7 @@
 
 set -e
 
-export GRADLE_USER_HOME=~/.gradle
+GRADLE_USER_HOME="$(echo ~)/.gradle"
 
 echo "GRADLE_USER_HOME: $GRADLE_USER_HOME"
 
