@@ -2,9 +2,10 @@
 
 set -e
 
-GRADLE_USER_HOME=/home/$(whoami)/.gradle
+GRADLE_USER_HOME=/$(eval echo ~$USER)/.gradle
 
-echo "GRADLE_USER_HOME: $GRADLE_USER_HOME"
+echo "
+GRADLE_USER_HOME: $GRADLE_USER_HOME"
 
 mkdir -p "$GRADLE_USER_HOME"
 
