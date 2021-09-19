@@ -2,7 +2,7 @@
 
 set -e
 
-export GRADLE_USER_HOME=~/.gradle
+echo "default GRADLE_USER_HOME: $GRADLE_USER_HOME"
 
 mkdir -p "$GRADLE_USER_HOME"
 
