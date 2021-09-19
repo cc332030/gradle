@@ -2,7 +2,7 @@
 
 set -e
 
-GRADLE_USER_HOME="$(echo ~)/.gradle"
+GRADLE_USER_HOME=/home/$(whoami)/.gradle
 
 echo "GRADLE_USER_HOME: $GRADLE_USER_HOME"
 
