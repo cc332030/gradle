@@ -2,7 +2,8 @@
 
 set -e
 
-GRADLE_USER_HOME=$(eval echo ~$USER)/.gradle
+USER_HOME=$(echo ~)
+GRADLE_USER_HOME=$USER_HOME/.gradle
 
 echo
 echo "GRADLE_USER_HOME: $GRADLE_USER_HOME"
@@ -22,7 +23,7 @@ repoStageSonatype=https://oss.sonatype.org/service/local/staging/deploy/maven2
 
 signing.keyId=$GPG_SIGN_KEY
 signing.password=$GPG_PASSWORD
-signing.secretKeyRingFile=$(echo ~)/.gnupg/secring.gpg
+signing.secretKeyRingFile=$USER_HOME/.gnupg/secring.gpg
 
 ossrhUsername=$OSSRH_USERNAME
 ossrhPassword=$OSSRH_PASSWORD
