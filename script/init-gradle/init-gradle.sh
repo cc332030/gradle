@@ -4,8 +4,8 @@ set -e
 
 GRADLE_USER_HOME=$(eval echo ~$USER)/.gradle
 
-echo "
-GRADLE_USER_HOME: $GRADLE_USER_HOME"
+echo
+echo "GRADLE_USER_HOME: $GRADLE_USER_HOME"
 
 mkdir -p "$GRADLE_USER_HOME"
 
@@ -31,10 +31,10 @@ ossrhPassword=$OSSRH_PASSWORD
 ## gradle parallel
 if [ -f $GRADLE_PROPERTIES ]; then
 
-  snapshot=$(cat "$GRADLE_PROPERTIES" | grep version= | grep '\-SNAPSHOT' | cut -d = -f 2)
-  if [ "$snapshot" ]; then
+  SNAPSHOT=$(cat "$GRADLE_PROPERTIES" | grep version= | grep '\-SNAPSHOT' | cut -d = -f 2)
+  if [ "$SNAPSHOT" ]; then
     echo
-    echo "snapshot: $snapshot"
+    echo "SNAPSHOT: $SNAPSHOT"
     echo "org.gradle.parallel=true" >> "$GRADLE_PROPERTIES_PATH"
   fi
 fi
