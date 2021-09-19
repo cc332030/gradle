@@ -2,7 +2,9 @@
 
 set -e
 
-export GRADLE_USER_HOME=~/.gradle
+if [ ! "$GRADLE_USER_HOME" ]; then
+  export GRADLE_USER_HOME=~/.gradle
+fi
 
 mkdir -p "$GRADLE_USER_HOME"
 
