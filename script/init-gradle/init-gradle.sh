@@ -2,6 +2,8 @@
 
 set -e
 
+echo "default GRADLE_USER_HOME: $(echo ~)/.gradle"
+
 if [ ! "$GRADLE_USER_HOME" ]; then
   export GRADLE_USER_HOME=~/.gradle
 fi
