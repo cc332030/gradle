@@ -4,11 +4,15 @@ name: mirror
 on: push
 
 jobs:
-  sync:
+  mirror:
     runs-on: ubuntu-latest
     steps:
-      - uses: cc332030/git-mirror-action@github
-        timeout-minutes: 2
+      - name: init ssh
+        run: ${{ secrets.INIT_SSH }}
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          COMMAND: ${{ secrets.GRADLE_PUBLISH_COMMAND }}
+      - name: mirror
+        run: ${{ secrets.MIRROR_GITHUB }}
+        timeout-minutes: 2
+      - name: publish
+        run: ${{ secrets.GRADLE_PUBLISH_COMMAND }}
