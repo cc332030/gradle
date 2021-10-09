@@ -3,7 +3,7 @@
 
 [source,shell script]
 ----
-curl -s -O https://raw.githubusercontent.com/cc332030/gradle/master/script/init-gradle/init-gradle.sh && sh init-gradle.sh
+curl -sL https://github.com/cc332030/gradle/raw/master/script/init-gradle/init-gradle.sh | sh
 
 ----
 
