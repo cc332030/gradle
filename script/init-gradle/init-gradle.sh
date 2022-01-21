@@ -17,9 +17,6 @@ echo "
 
 org.gradle.java.installations.auto-detect=false
 
-repoSnapshotAliyun=https://packages.aliyun.com/maven/repository/2011805-snapshot-nunUNu
-repoReleaseAliyun=https://packages.aliyun.com/maven/repository/2011805-release-MMUG60
-
 repoSnapshotSonatype=https://oss.sonatype.org/content/repositories/snapshots
 repoReleaseSonatype=https://oss.sonatype.org/service/local/repositories/releases/content/
 repoStageSonatype=https://oss.sonatype.org/service/local/staging/deploy/maven2
