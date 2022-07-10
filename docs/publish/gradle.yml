@@ -5,8 +5,12 @@ on: [push, pull_request]
 
 jobs:
   mirror:
-    uses: cc332030/git/.github/workflows/mirror.yml@master
-    secrets:
-      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: cc332030/init-ssh-action@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      - uses: cc332030/git-mirror-action@main
+        timeout-minutes: 2
       - name: publish
         run: ${{ secrets.GRADLE_PUBLISH_COMMAND }}
