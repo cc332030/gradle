@@ -58,11 +58,4 @@ then
   cp -r "$CP_PATH" ~
 fi
 
-ls -lh ~/.gradle
-
-echo "GITHUB_ACTOR: $GITHUB_ACTOR" | base64
-echo "OSSRH_USERNAME: $OSSRH_USERNAME" | base64
-
-base64 "GRADLE_PROPERTIES_PATH: $GRADLE_PROPERTIES_PATH"
-
 echo 'init-gradle successfully'
