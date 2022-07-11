@@ -2,6 +2,8 @@
 
 set -e
 
+echo 'init-gradle'
+
 user=$(whoami)
 
 echo "user: $user"
@@ -11,6 +13,8 @@ USER_HOME=~
 
 GRADLE_USER_HOME=$USER_HOME/.gradle
 echo "GRADLE_USER_HOME: $GRADLE_USER_HOME"
+
+CP_PATH=$GRADLE_USER_HOME
 
 mkdir -p "$GRADLE_USER_HOME"
 
@@ -43,3 +47,10 @@ if [ -f $GRADLE_PROPERTIES ]; then
     echo "org.gradle.parallel=true" >> "$GRADLE_PROPERTIES_PATH"
   fi
 fi
+
+if [ ! ~ = "$USER_HOME" ]
+then
+  cp -r "$CP_PATH" ~
+fi
+
+echo 'init-gradle successfully'
