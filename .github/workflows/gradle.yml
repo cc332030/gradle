@@ -33,7 +33,7 @@ jobs:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
           GPG_SIGN_KEY: ${{ secrets.GPG_SIGN_KEY }}
-          OSSRH_USERNAME: ${{ secrets.GPG_SIGN_KEY }}
-          OSSRH_PASSWORD: ${{ secrets.GPG_SIGN_KEY }}
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
         with:
           command: ${{ inputs.command }}
