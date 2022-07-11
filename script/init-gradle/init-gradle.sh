@@ -7,12 +7,7 @@ user=$(whoami)
 echo "user: $user"
 echo "home:" ~
 
-if [ "root" = "$user" ]
-then
-  USER_HOME=/root
-else
-  USER_HOME=/home/$user
-fi
+USER_HOME=~
 
 GRADLE_USER_HOME=$USER_HOME/.gradle
 echo "GRADLE_USER_HOME: $GRADLE_USER_HOME"
