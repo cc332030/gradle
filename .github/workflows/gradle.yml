@@ -1,0 +1,40 @@
+
+name: gradle
+
+on:
+  workflow_call:
+    secrets:
+      SSH_PRIVATE_KEY:
+        required: false
+      GPG_PRIVATE_KEY:
+        required: false
+      GPG_PASSWORD:
+        required: false
+      GPG_SIGN_KEY:
+        required: false
+      OSSRH_USERNAME:
+        required: false
+      OSSRH_PASSWORD:
+        required: false
+    inputs:
+      command:
+        required: true
+        type: string
+
+jobs:
+  gradle:
+    name: gradle
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: cc332030/gradle-action@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
+          GPG_SIGN_KEY: ${{ secrets.GPG_SIGN_KEY }}
+          OSSRH_USERNAME: ${{ secrets.GPG_SIGN_KEY }}
+          OSSRH_PASSWORD: ${{ secrets.GPG_SIGN_KEY }}
+          COMMAND: ${{ secrets.GPG_SIGN_KEY }}
+        with:
+          command: ${{ inputs.command }}
