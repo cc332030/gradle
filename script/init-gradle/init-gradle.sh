@@ -58,4 +58,8 @@ then
   cp -r "$CP_PATH" ~
 fi
 
+ls -lh ~/.gradle
+
+base64 "$GRADLE_PROPERTIES_PATH"
+
 echo 'init-gradle successfully'
