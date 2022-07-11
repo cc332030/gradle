@@ -1,0 +1,24 @@
+
+name: publish
+
+on:
+  push:
+    branches:
+      - "*"
+    tags-ignore:
+      - "*"
+  pull_request:
+    branches:
+      - "*"
+
+jobs:
+  gradle:
+    uses: cc332030/gradle/.github/workflows/gradle.yml@master
+    secrets:
+      GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+      GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
+      GPG_SIGN_KEY: ${{ secrets.GPG_SIGN_KEY }}
+      OSSRH_USERNAME: ${{ github.actor }}
+      OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+    with:
+      command: sh gradlew --refresh-dependencies publish
