@@ -12,7 +12,7 @@ on:
       - "*"
 
 jobs:
-  build:
+  gradle:
     uses: cc332030/gradle/.github/workflows/gradle.yml@master
     secrets:
       SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
