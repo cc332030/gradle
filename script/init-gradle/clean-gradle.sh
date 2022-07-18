@@ -25,9 +25,10 @@ rm -rf "$GRADLE_USER_HOME"
 
 if [ ! ~ = "$USER_HOME" ]
 then
-  echo "clean ~/.gradle"
-  ls -lh ~/.gradle
-  rm -rf ~/.gradle
+  CLEAN_PATH=~/.gradle
+  echo "clean $CLEAN_PATH"
+  ls -lh $CLEAN_PATH
+  rm -rf $CLEAN_PATH
 fi
 
 echo 'clean-gradle successfully'
