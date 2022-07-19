@@ -4,8 +4,7 @@ set -e
 
 echo 'init-gradle'
 
-export GRADLE_USER_HOME=~/.gradle
-WORK_PATH=$GRADLE_USER_HOME
+WORK_PATH=~/.gradle
 mkdir -p "$WORK_PATH"
 
 echo "~"
