@@ -7,14 +7,6 @@ echo 'init-gradle'
 WORK_PATH=~/.gradle
 mkdir -p "$WORK_PATH"
 
-echo "~"
-echo ~
-
-echo "ls -alh ~"
-ls -alh ~
-
-echo "WORK_PATH: $WORK_PATH"
-
 GRADLE_PROPERTIES=gradle.properties
 GRADLE_PROPERTIES_PATH=$WORK_PATH/$GRADLE_PROPERTIES
 
@@ -56,14 +48,5 @@ if [ ! ~ = "$USER_HOME" ]
 then
   ln -s $WORK_PATH "$USER_HOME"
 fi
-
-echo "ls -alh ~/.gradle"
-ls -alh ~/.gradle
-
-echo "ls -alh /root"
-ls -alh /root
-
-echo "ls -alh /root/.gradle"
-ls -alh /root/.gradle
 
 echo 'init-gradle successfully'
