@@ -5,9 +5,14 @@ set -e
 echo 'init-gradle'
 
 export GRADLE_USER_HOME=~/.gradle
+mkdir -p "$WORK_PATH"
+
+echo "ls -lh ~"
+ls -lh ~
 
 WORK_PATH=$GRADLE_USER_HOME
-mkdir -p "$WORK_PATH"
+
+echo "WORK_PATH: $WORK_PATH"
 
 GRADLE_PROPERTIES=gradle.properties
 GRADLE_PROPERTIES_PATH=$WORK_PATH/$GRADLE_PROPERTIES
@@ -51,9 +56,13 @@ then
   ln -s $WORK_PATH "$USER_HOME"
 fi
 
+echo "ls -lh ~/.gradle"
 ls -lh ~/.gradle
 
+echo "ls -lh /root"
 ls -lh /root
+
+echo "ls -lh /root/.gradle"
 ls -lh /root/.gradle
 
 echo 'init-gradle successfully'
