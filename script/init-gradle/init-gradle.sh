@@ -8,8 +8,11 @@ export GRADLE_USER_HOME=~/.gradle
 WORK_PATH=$GRADLE_USER_HOME
 mkdir -p "$WORK_PATH"
 
-echo "ls -lh ~"
-ls -lh ~
+echo "~"
+echo ~
+
+echo "ls -alh ~"
+ls -alh ~
 
 echo "WORK_PATH: $WORK_PATH"
 
@@ -55,13 +58,13 @@ then
   ln -s $WORK_PATH "$USER_HOME"
 fi
 
-echo "ls -lh ~/.gradle"
-ls -lh ~/.gradle
+echo "ls -alh ~/.gradle"
+ls -alh ~/.gradle
 
-echo "ls -lh /root"
-ls -lh /root
+echo "ls -alh /root"
+ls -alh /root
 
-echo "ls -lh /root/.gradle"
-ls -lh /root/.gradle
+echo "ls -alh /root/.gradle"
+ls -alh /root/.gradle
 
 echo 'init-gradle successfully'
