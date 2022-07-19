@@ -4,27 +4,13 @@ set -e
 
 echo 'init-gradle'
 
-user=$(whoami)
+export GRADLE_USER_HOME=~/.gradle
 
-echo "user: $user"
-echo "home:" ~
-
-if [ "root" = "$user" ]
-then
-  USER_HOME=/root
-else
-  USER_HOME=/home/$user
-fi
-
-GRADLE_USER_HOME=$USER_HOME/.gradle
-echo "GRADLE_USER_HOME: $GRADLE_USER_HOME"
-
-CP_PATH=$GRADLE_USER_HOME
-
-mkdir -p "$GRADLE_USER_HOME"
+WORK_PATH=$GRADLE_USER_HOME
+mkdir -p "$WORK_PATH"
 
 GRADLE_PROPERTIES=gradle.properties
-GRADLE_PROPERTIES_PATH=$GRADLE_USER_HOME/$GRADLE_PROPERTIES
+GRADLE_PROPERTIES_PATH=$WORK_PATH/$GRADLE_PROPERTIES
 
 echo "
 
@@ -44,7 +30,6 @@ ossrhPassword=$OSSRH_PASSWORD
 
 ## gradle parallel
 if [ -f $GRADLE_PROPERTIES ]; then
-
   SNAPSHOT=$(cat "$GRADLE_PROPERTIES" | grep version= | grep '\-SNAPSHOT' | cut -d = -f 2)
   if [ "$SNAPSHOT" ]; then
     echo
@@ -53,9 +38,19 @@ if [ -f $GRADLE_PROPERTIES ]; then
   fi
 fi
 
+
+
+user=$(whoami)
+if [ "root" = "$user" ]
+then
+  USER_HOME=/root
+else
+  USER_HOME=/home/$user
+fi
+
 if [ ! ~ = "$USER_HOME" ]
 then
-  cp -r "$CP_PATH" ~
+  ln -s $WORK_PATH "$USER_HOME"
 fi
 
 echo 'init-gradle successfully'
