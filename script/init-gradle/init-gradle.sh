@@ -5,12 +5,11 @@ set -e
 echo 'init-gradle'
 
 export GRADLE_USER_HOME=~/.gradle
+WORK_PATH=$GRADLE_USER_HOME
 mkdir -p "$WORK_PATH"
 
 echo "ls -lh ~"
 ls -lh ~
-
-WORK_PATH=$GRADLE_USER_HOME
 
 echo "WORK_PATH: $WORK_PATH"
 
