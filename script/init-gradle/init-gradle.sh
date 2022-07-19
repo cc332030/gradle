@@ -51,6 +51,8 @@ then
   ln -s $WORK_PATH "$USER_HOME"
 fi
 
+ls -lh ~/.gradle
+
 ls -lh /root
 ls -lh /root/.gradle
 
