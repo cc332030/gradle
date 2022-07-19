@@ -38,8 +38,6 @@ if [ -f $GRADLE_PROPERTIES ]; then
   fi
 fi
 
-
-
 user=$(whoami)
 if [ "root" = "$user" ]
 then
@@ -52,5 +50,8 @@ if [ ! ~ = "$USER_HOME" ]
 then
   ln -s $WORK_PATH "$USER_HOME"
 fi
+
+ls -lh /root
+ls -lh /root/.gradle
 
 echo 'init-gradle successfully'
