@@ -1,9 +1,9 @@
 #!/bin/sh
 
-echo 'clean-gradle'
+echo 'init-gradle-clean'
 
 set -e
 
 rm -rf ~/.gradle
 
-echo 'clean-gradle successfully'
+echo 'init-gradle-clean successfully'
