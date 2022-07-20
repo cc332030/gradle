@@ -1,0 +1,52 @@
+
+name: deploy
+
+on:
+  workflow_call:
+    secrets:
+      SSH_PRIVATE_KEY:
+        required: true
+      HOST:
+        required: true
+      PORT:
+        required: true
+      ORIGIN_PATH:
+        required: true
+      REMOTE_PATH:
+        required: true
+      PREPARE_COMMAND:
+        required: false
+      ACTION_COMMAND:
+        required: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          key: gradle
+          path: |
+            ~/.gradle/wrapper
+            ~/.gradle/jdks
+            ~/.gradle/caches
+      - run: sh gradlew --refresh-dependencies build
+      - name: init-ssh-pre
+        run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-pre.sh | sudo sh
+      - name: init-ssh
+        run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh.sh | sh
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: deploy
+        run: curl -sL https://github.com/cc332030/linux/raw/master/script/deploy/deploy.sh | sh
+        timeout-minutes: 2
+        env:
+          HOST: ${{ secrets.HOST }}
+          PORT: ${{ secrets.PORT }}
+          ORIGIN_PATH: ${{ secrets.ORIGIN_PATH }}
+          REMOTE_PATH: ${{ secrets.REMOTE_PATH }}
+          PREPARE_COMMAND: ${{ secrets.PREPARE_COMMAND }}
+          ACTION_COMMAND: ${{ secrets.ACTION_COMMAND }}
+      - name: init-ssh-clean
+        run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-clean.sh | sh
