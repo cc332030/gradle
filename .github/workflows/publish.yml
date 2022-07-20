@@ -1,0 +1,47 @@
+
+name: publish
+
+on:
+  workflow_call:
+    secrets:
+      GPG_PRIVATE_KEY:
+        required: true
+      GPG_PASSWORD:
+        required: true
+      GPG_SIGN_KEY:
+        required: true
+      OSSRH_USERNAME:
+        required: true
+      OSSRH_PASSWORD:
+        required: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: init-gpg
+        run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-gpg/init-gpg.sh | sh
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
+      - name: init-gradle
+        run: curl -sL https://github.com/cc332030/gradle/raw/master/script/init-gradle/init-gradle.sh | sh
+        env:
+          GPG_SIGN_KEY: ${{ secrets.GPG_SIGN_KEY }}
+          GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+      - uses: actions/cache@v2
+        with:
+          key: gradle
+          path: |
+            ~/.gradle/wrapper
+            ~/.gradle/jdks
+            ~/.gradle/caches
+      - name: publish
+        run: sh gradlew --refresh-dependencies publish
+      - name: init-gpg-clean
+        run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-gpg-clean.sh | sh
+      - name: init-gradle-clean
+        run: curl -sL https://github.com/cc332030/gradle/raw/master/script/init-gradle/init-gradle-clean.sh | sh
