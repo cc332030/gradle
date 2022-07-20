@@ -41,6 +41,10 @@ jobs:
             ~/.gradle/caches
       - name: publish
         run: sh gradlew --refresh-dependencies publish
+      - name: whoami
+        run: whoami
+      - name: ls ~/.gradle
+        run: ls -alh ~/.gradle
       - name: init-gpg-clean
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-gpg/init-gpg-clean.sh | sh
       - name: init-gradle-clean
