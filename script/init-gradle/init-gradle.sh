@@ -45,6 +45,7 @@ then
 else
   USER_HOME=/home/$user
 fi
+echo "USER_HOME: ${USER_HOME}"
 
 if [ ! ~ = "$USER_HOME" ]
 then
