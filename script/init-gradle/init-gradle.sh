@@ -5,6 +5,8 @@ set -e
 echo 'init-gradle'
 
 WORK_PATH=~/.gradle
+echo "WORK_PATH: ${WORK_PATH}"
+
 mkdir -p "$WORK_PATH"
 
 GRADLE_PROPERTIES=gradle.properties
