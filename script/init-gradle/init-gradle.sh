@@ -14,6 +14,9 @@ GRADLE_PROPERTIES_PATH=$WORK_PATH/$GRADLE_PROPERTIES
 
 echo "
 
+org.gradle.daemon=false
+org.gradle.parallel=true
+
 org.gradle.java.installations.auto-detect=false
 
 repoSnapshotSonatype=https://oss.sonatype.org/content/repositories/snapshots
