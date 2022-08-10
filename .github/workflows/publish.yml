@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: init-gpg
-        run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-gpg/init-gpg.sh | sh
+        run: curl -sL https://github.com/cc332030/gnupg/raw/main/script/init-gpg/init-gpg.sh | sh
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
@@ -42,6 +42,6 @@ jobs:
       - name: publish
         run: sh gradlew --refresh-dependencies publish
       - name: init-gpg-clean
-        run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-gpg/init-gpg-clean.sh | sh
+        run: curl -sL https://github.com/cc332030/gnupg/raw/main/script/init-gpg/init-gpg-clean.sh | sh
       - name: init-gradle-clean
         run: curl -sL https://github.com/cc332030/gradle/raw/master/script/init-gradle/init-gradle-clean.sh | sh
