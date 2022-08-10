@@ -24,10 +24,12 @@ repoSnapshotSonatype=https://oss.sonatype.org/content/repositories/snapshots
 repoReleaseSonatype=https://oss.sonatype.org/service/local/repositories/releases/content/
 repoStageSonatype=https://oss.sonatype.org/service/local/staging/deploy/maven2
 
+# PgpSignatory, RSA only
 signing.keyId=$GPG_SIGN_KEY
 signing.password=$GPG_PASSWORD
 signing.secretKeyRingFile=$GPG_HOME/secring.gpg
 
+# use gpg agent, useGpgCmd() GnupgSignatory, ECC & RSA
 signing.gnupg.executable=gpg
 signing.gnupg.homeDir=$GPG_HOME
 signing.gnupg.keyName=$GPG_SIGN_KEY
