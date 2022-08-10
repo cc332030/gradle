@@ -28,6 +28,7 @@ signing.keyId=$GPG_SIGN_KEY
 signing.password=$GPG_PASSWORD
 signing.secretKeyRingFile=$GPG_HOME/secring.gpg
 
+signing.gnupg.executable=gpg
 signing.gnupg.homeDir=$GPG_HOME
 signing.gnupg.keyName=$GPG_SIGN_KEY
 signing.gnupg.passphrase=$GPG_PASSWORD
