@@ -12,6 +12,8 @@ mkdir -p "$WORK_PATH"
 GRADLE_PROPERTIES=gradle.properties
 GRADLE_PROPERTIES_PATH=$WORK_PATH/$GRADLE_PROPERTIES
 
+GPG_HOME=~/.gnupg
+
 echo "
 
 org.gradle.daemon=false
@@ -24,7 +26,11 @@ repoStageSonatype=https://oss.sonatype.org/service/local/staging/deploy/maven2
 
 signing.keyId=$GPG_SIGN_KEY
 signing.password=$GPG_PASSWORD
-signing.secretKeyRingFile=$USER_HOME/.gnupg/secring.gpg
+signing.secretKeyRingFile=$GPG_HOME/secring.gpg
+
+signing.gnupg.homeDir=$GPG_HOME
+signing.gnupg.keyName=$GPG_SIGN_KEY
+signing.gnupg.passphrase=$GPG_PASSWORD
 
 ossrhUsername=$OSSRH_USERNAME
 ossrhPassword=$OSSRH_PASSWORD
