@@ -1,0 +1,13 @@
+
+= build.gradle
+
+== dependencies
+
+=== exclude
+
+module 为空字符串时，exclude 排除所有 group 下的 module
+
+[source,groovy]
+----
+exclude group: 'com.fasterxml.jackson.module', module: ''
+----

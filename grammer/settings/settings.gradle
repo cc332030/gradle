@@ -1,0 +1,56 @@
+
+rootProject.name = 'dl-proxy'
+
+//include 'utils'
+
+
+
+import org.apache.tools.ant.taskdefs.condition.Os
+
+enableFeaturePreview('VERSION_CATALOGS')
+
+def isWindows = Os.isFamily(Os.FAMILY_WINDOWS)
+
+dependencyResolutionManagement {
+
+  repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+
+  repositories {
+
+    if (isWindows) {
+
+      maven {
+        url "https://maven.aliyun.com/repository/public"
+      }
+      maven {
+        url repoReleaseAliyun
+        credentials {
+          username aliyunPackagesUsername
+          password aliyunPackagesPassword
+        }
+      }
+      maven {
+        url repoSnapshotAliyun
+        credentials {
+          username aliyunPackagesUsername
+          password aliyunPackagesPassword
+        }
+      }
+    } else {
+
+      mavenCentral()
+      maven {
+        url repoSnapshotSonatype
+      }
+      maven {
+        url repoReleaseSonatype
+      }
+    }
+  }
+
+  versionCatalogs {
+    libs {
+      from(group: 'com.c332030', name: 'c-commons-catalog', version: '1.0.1-SNAPSHOT')
+    }
+  }
+}
