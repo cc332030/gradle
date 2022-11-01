@@ -50,4 +50,5 @@ jobs:
           PREPARE_COMMAND: ${{ secrets.PREPARE_COMMAND }}
           ACTION_COMMAND: ${{ secrets.ACTION_COMMAND }}
       - name: init-ssh-clean
+        if: ${{ always() }}
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-clean.sh | sh

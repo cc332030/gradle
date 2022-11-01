@@ -42,6 +42,8 @@ jobs:
       - name: publish
         run: sh gradlew --refresh-dependencies publish
       - name: init-gpg-clean
+        if: ${{ always() }}
         run: curl -sL https://github.com/cc332030/gnupg/raw/main/script/init-gpg/init-gpg-clean.sh | sh
       - name: init-gradle-clean
+        if: ${{ always() }}
         run: curl -sL https://github.com/cc332030/gradle/raw/master/script/init-gradle/init-gradle-clean.sh | sh
