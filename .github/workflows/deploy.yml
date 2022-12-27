@@ -3,6 +3,19 @@ name: deploy
 
 on:
   workflow_call:
+    inputs:
+      origin-path:
+        required: true
+        type: string
+      remote-path:
+        required: true
+        type: string
+      prepare-command:
+        required: false
+        type: string
+      action-command:
+        required: false
+        type: string
     secrets:
       SSH_PRIVATE_KEY:
         required: true
@@ -10,14 +23,6 @@ on:
         required: true
       PORT:
         required: true
-      ORIGIN_PATH:
-        required: true
-      REMOTE_PATH:
-        required: true
-      PREPARE_COMMAND:
-        required: false
-      ACTION_COMMAND:
-        required: false
 
 jobs:
   deploy:
@@ -45,10 +50,10 @@ jobs:
         env:
           HOST: ${{ secrets.HOST }}
           PORT: ${{ secrets.PORT }}
-          ORIGIN_PATH: ${{ secrets.ORIGIN_PATH }}
-          REMOTE_PATH: ${{ secrets.REMOTE_PATH }}
-          PREPARE_COMMAND: ${{ secrets.PREPARE_COMMAND }}
-          ACTION_COMMAND: ${{ secrets.ACTION_COMMAND }}
+          ORIGIN_PATH: ${{ inputs.origin-path }}
+          REMOTE_PATH: ${{ inputs.remote-path }}
+          PREPARE_COMMAND: ${{ inputs.prepare-command }}
+          ACTION_COMMAND: ${{ inputs.action-command }}
       - name: init-ssh-clean
         if: ${{ always() }}
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-clean.sh | sh
