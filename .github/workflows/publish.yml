@@ -41,10 +41,14 @@ jobs:
             ~/.gradle/caches
       - name: publish
         run: sh gradlew --refresh-dependencies publish
+      - id: generate-name
+        name: Generate artifact name
+        run: |
+          echo "::set-output name=artifact::${{ github.event.repository.name }}.${{ github.ref_name }}.${{ github.run_id }}"
       - name: upload-artifact
         uses: actions/upload-artifact@v3
         with:
-          name: build
+          name: ${{ steps.generate-name.outputs.artifact }}
           path: |
             build
       - name: init-gpg-clean
