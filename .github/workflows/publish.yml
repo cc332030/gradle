@@ -41,6 +41,12 @@ jobs:
             ~/.gradle/caches
       - name: publish
         run: sh gradlew --refresh-dependencies publish
+      - name: upload-artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: |
+            build
       - name: init-gpg-clean
         if: ${{ always() }}
         run: curl -sL https://github.com/cc332030/gnupg/raw/main/script/init-gpg/init-gpg-clean.sh | sh
