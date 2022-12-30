@@ -38,6 +38,12 @@ jobs:
             ~/.gradle/caches
       - name: build
         run: sh gradlew --refresh-dependencies build
+      - name: upload-artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: |
+            build
       - name: init-ssh-pre
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-pre.sh | sudo sh
       - name: init-ssh
