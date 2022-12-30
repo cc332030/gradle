@@ -38,14 +38,14 @@ jobs:
             ~/.gradle/caches
       - name: build
         run: sh gradlew --refresh-dependencies build
-      - id: generate-name
-        name: Generate artifact name
+      - id: artifact-name
+        name: artifact-name
         run: |
-          echo "::set-output name=artifact::${{ github.event.repository.name }}.${{ github.ref_name }}.${{ github.run_id }}"
+          echo "artifact-name=${{ github.event.repository.name }}.${{ github.ref_name }}.${{ github.run_id }}" >> $GITHUB_OUTPUT
       - name: upload-artifact
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ steps.generate-name.outputs.artifact }}
+          name: ${{ steps.artifact-name.outputs.artifact-name }}
           path: |
             build
       - name: init-ssh-pre
