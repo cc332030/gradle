@@ -19,7 +19,8 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: checkout
+        uses: actions/checkout@v3
       - name: init-gpg
         run: curl -sL https://github.com/cc332030/gnupg/raw/main/script/init-gpg/init-gpg.sh | sh
         env:
@@ -32,7 +33,8 @@ jobs:
           GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-      - uses: actions/cache@v3
+      - name: cache
+        uses: actions/cache@v3
         with:
           key: gradle
           path: |
