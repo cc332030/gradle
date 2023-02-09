@@ -16,9 +16,6 @@ on:
       action-command:
         required: false
         type: string
-      multi-module:
-        required: false
-        type: string
     secrets:
       SSH_PRIVATE_KEY:
         required: true
@@ -69,7 +66,6 @@ jobs:
           REMOTE_PATH: ${{ inputs.remote-path }}
           PREPARE_COMMAND: ${{ inputs.prepare-command }}
           ACTION_COMMAND: ${{ inputs.action-command }}
-          MULTI_MODULE: ${{ inputs.multi-module }}
       - name: init-ssh-clean
         if: ${{ always() }}
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-clean.sh | sh
