@@ -1,0 +1,19 @@
+
+= gradle
+
+docker run
+[source,shell]
+----
+JDK_VERSION=11
+JDK=ibm-semeru-runtimes:open-$JDK_VERSION-jdk
+
+GRADLE_PROPERTIES_PATH=.gradle/gradle.properties
+
+docker run --rm \
+  -v ~/$GRADLE_PROPERTIES_PATH:/root/$GRADLE_PROPERTIES_PATH \
+  -v "$(pwd)":/data \
+  -w /data \
+  $JDK \
+  sh gradlew build
+
+----
