@@ -1,5 +1,4 @@
 @echo off
-%utf8%
 
 rem link app dir
 
