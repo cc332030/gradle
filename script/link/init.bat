@@ -6,6 +6,8 @@ echo.
 set /p newApp=请选择 gradle 解压路径：
 ::set newApp=%~dp0data\wrapper\dists\gradle-6.8.3-bin\7ykxq50lst7lb7wx1nijpicxn\gradle-6.8.3
 
+setx /M GRADLE_HOME "%userprofile%\.gradle\app"
+
 rem link data dir
 set gradle_data=%~dp0data
 set gradle_data_cache=F:\data\gradle
