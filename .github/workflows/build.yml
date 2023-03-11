@@ -1,0 +1,43 @@
+
+name: build
+
+on:
+  workflow_call:
+    secrets:
+      GPG_PRIVATE_KEY:
+        required: true
+      GPG_PASSWORD:
+        required: true
+      GPG_SIGN_KEY:
+        required: true
+      OSSRH_USERNAME:
+        required: true
+      OSSRH_PASSWORD:
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: cache
+        uses: actions/cache@v3
+        with:
+          key: gradle
+          path: |
+            ~/.gradle/wrapper
+            ~/.gradle/jdks
+            ~/.gradle/caches
+      - name: build
+        run: sh gradlew --refresh-dependencies build
+      - id: artifact-name
+        name: artifact-name
+        run: |
+          echo "artifact-name=${{ github.event.repository.name }}.${{ github.ref_name }}.${{ github.run_id }}" >> $GITHUB_OUTPUT
+      - name: upload-artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ steps.artifact-name.outputs.artifact-name }}
+          path: |
+            build
