@@ -3,17 +3,11 @@ name: build
 
 on:
   workflow_call:
-    secrets:
-      GPG_PRIVATE_KEY:
-        required: true
-      GPG_PASSWORD:
-        required: true
-      GPG_SIGN_KEY:
-        required: true
-      OSSRH_USERNAME:
-        required: true
-      OSSRH_PASSWORD:
-        required: true
+    inputs:
+      build_command:
+        required: false
+        type: string
+        default: sh gradlew --refresh-dependencies build
 
 jobs:
   build:
@@ -30,7 +24,7 @@ jobs:
             ~/.gradle/jdks
             ~/.gradle/caches
       - name: build
-        run: sh gradlew --refresh-dependencies build
+        run: ${{ inputs.build_command }}
       - id: artifact-name
         name: artifact-name
         run: |
