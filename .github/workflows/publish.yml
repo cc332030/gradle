@@ -4,6 +4,10 @@ name: publish
 on:
   workflow_call:
     inputs:
+      distribution:
+        required: false
+        type: string
+        default: 'temurin'
       java-version:
         required: false
         type: string
@@ -47,6 +51,7 @@ jobs:
             ~/.gradle/caches
       - uses: actions/setup-java@v3
         with:
+          distribution: ${{ inputs.distribution }}
           java-version: ${{ inputs.java-version }}
       - name: publish
         run: sh gradlew --refresh-dependencies publish
