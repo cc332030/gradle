@@ -3,6 +3,10 @@ name: publish
 
 on:
   workflow_call:
+    inputs:
+      java-version:
+        required: false
+        type: string
     secrets:
       GPG_PRIVATE_KEY:
         required: true
@@ -41,6 +45,9 @@ jobs:
             ~/.gradle/wrapper
             ~/.gradle/jdks
             ~/.gradle/caches
+      - uses: actions/setup-java@v3
+        with:
+          java-version: ${{ inputs.java-version }}
       - name: publish
         run: sh gradlew --refresh-dependencies publish
       - id: artifact-name

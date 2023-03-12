@@ -4,7 +4,10 @@ name: build
 on:
   workflow_call:
     inputs:
-      build_command:
+      java-version:
+        required: false
+        type: string
+      build-command:
         required: false
         type: string
         default: sh gradlew --refresh-dependencies build
@@ -23,8 +26,11 @@ jobs:
             ~/.gradle/wrapper
             ~/.gradle/jdks
             ~/.gradle/caches
+      - uses: actions/setup-java@v3
+        with:
+          java-version: ${{ inputs.java-version }}
       - name: build
-        run: ${{ inputs.build_command }}
+        run: ${{ inputs.build-command }}
       - id: artifact-name
         name: artifact-name
         run: |
