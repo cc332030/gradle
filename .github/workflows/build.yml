@@ -30,7 +30,8 @@ jobs:
             ~/.gradle/wrapper
             ~/.gradle/jdks
             ~/.gradle/caches
-      - uses: actions/setup-java@v3
+      - name: setup-java
+        uses: actions/setup-java@v3
         with:
           distribution: ${{ inputs.distribution }}
           java-version: ${{ inputs.java-version }}
