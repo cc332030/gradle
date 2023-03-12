@@ -7,7 +7,7 @@ on:
       distribution:
         required: false
         type: string
-        default: 'temurin'
+        default: temurin
       java-version:
         required: false
         type: string
