@@ -47,3 +47,4 @@ jobs:
           name: ${{ steps.artifact-name.outputs.artifact-name }}
           path: |
             build
+          retention-days: 3

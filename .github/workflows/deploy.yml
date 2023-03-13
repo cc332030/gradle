@@ -62,6 +62,7 @@ jobs:
           name: ${{ steps.artifact-name.outputs.artifact-name }}
           path: |
             build
+          retention-days: 3
       - name: init-ssh-pre
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-pre.sh | sudo sh
       - name: init-ssh
