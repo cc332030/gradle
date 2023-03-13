@@ -11,7 +11,7 @@ on:
       java-version:
         required: false
         type: string
-      build-command:
+      command:
         required: false
         type: string
         default: sh gradlew --refresh-dependencies build
@@ -36,7 +36,7 @@ jobs:
           distribution: ${{ inputs.distribution }}
           java-version: ${{ inputs.java-version }}
       - name: build
-        run: ${{ inputs.build-command }}
+        run: ${{ inputs.command }}
       - id: artifact-name
         name: artifact-name
         run: |
