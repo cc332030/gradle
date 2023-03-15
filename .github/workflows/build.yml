@@ -15,6 +15,11 @@ on:
         required: false
         type: string
         default: sh gradlew --refresh-dependencies build
+      artifact-path:
+        required: false
+        type: string
+        default: |
+          build
 
 jobs:
   build:
@@ -45,6 +50,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ steps.artifact-name.outputs.artifact-name }}
-          path: |
-            build
+          path: ${{ inputs.artifact-path }}
           retention-days: 3

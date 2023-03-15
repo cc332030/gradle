@@ -11,6 +11,11 @@ on:
       java-version:
         required: false
         type: string
+      artifact-path:
+        required: false
+        type: string
+        default: |
+          build
     secrets:
       GPG_PRIVATE_KEY:
         required: true
@@ -64,8 +69,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ steps.artifact-name.outputs.artifact-name }}
-          path: |
-            build
+          path: ${{ inputs.artifact-path }}
           retention-days: 3
       - name: init-gpg-clean
         if: ${{ always() }}
