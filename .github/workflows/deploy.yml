@@ -52,6 +52,7 @@ jobs:
             ~/.gradle/caches
       - name: setup-java
         uses: actions/setup-java@v3
+        if: ${{ inputs.java-version != '' }}
         with:
           distribution: ${{ inputs.distribution }}
           java-version: ${{ inputs.java-version }}
