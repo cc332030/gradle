@@ -1,0 +1,52 @@
+
+name:  deploy
+
+on:
+  push:
+    branches:
+      - "*"
+    tags-ignore:
+      - "*"
+  pull_request:
+    branches:
+      - "*"
+
+jobs:
+   deploy:
+    name:  deploy
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: checkout
+        uses: actions/checkout@v3
+      -
+        name: login
+        uses: docker/login-action@v2
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+      -
+        name: build-push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ github.actor }}/${{ github.event.repository.name }}:${{ github.ref_name }}
+            ${{ github.actor }}/${{ github.event.repository.name }}:latest
+      -
+        name: init-ssh-pre
+        run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-pre.sh | sudo sh
+      -
+        name: init-ssh
+        run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh.sh | sh
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      -
+        name: start
+        run: ssh -o LogLevel=ERROR -p ${{ secrets.PORT }} root@${{ secrets.HOST }} \
+          "cd /home/program/${{ github.event.repository.name }} && dcomposeinit -d"
+      -
+        name: init-ssh-clean
+        if: ${{ always() }}
+        run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-clean.sh | sh
