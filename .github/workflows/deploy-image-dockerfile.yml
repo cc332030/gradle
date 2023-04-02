@@ -14,8 +14,7 @@ on:
         required: true
 
 jobs:
-   deploy:
-    name:  deploy
+  deploy-image-dockerfile:
     runs-on: ubuntu-latest
     steps:
       -

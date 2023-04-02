@@ -27,7 +27,7 @@ on:
         required: true
 
 jobs:
-  deploy:
+  deploy-image:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
