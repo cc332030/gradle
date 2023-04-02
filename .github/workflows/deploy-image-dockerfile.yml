@@ -1,15 +1,17 @@
 
-name:  deploy
+name:  deploy-image-dockerfile
 
 on:
-  push:
-    branches:
-      - "*"
-    tags-ignore:
-      - "*"
-  pull_request:
-    branches:
-      - "*"
+  workflow_call:
+    secrets:
+      SSH_PRIVATE_KEY:
+        required: true
+      HOST:
+        required: true
+      PORT:
+        required: true
+      DOCKER_TOKEN:
+        required: true
 
 jobs:
    deploy:

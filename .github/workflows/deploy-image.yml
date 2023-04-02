@@ -1,5 +1,5 @@
 
-name: deploy
+name: deploy-image
 
 on:
   workflow_call:
@@ -22,6 +22,8 @@ on:
       HOST:
         required: true
       PORT:
+        required: true
+      DOCKER_TOKEN:
         required: true
 
 jobs:
