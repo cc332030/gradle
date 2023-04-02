@@ -49,7 +49,7 @@ jobs:
       - id: image-name
         name: image-name
         run: |
-          echo "image-name=${{ github.actor }}/${{ github.event.repository.name:latest }}" >> $GITHUB_OUTPUT
+          echo "image-name=${{ github.actor }}/${{ github.event.repository.name }}:latest" >> $GITHUB_OUTPUT
       - name: build-image
         run: sh gradlew --refresh-dependencies bootBuildImage --imageName=${{ steps.image-name.outputs.image-name }}
       -
