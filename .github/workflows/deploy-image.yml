@@ -1,0 +1,83 @@
+
+name: deploy
+
+on:
+  workflow_call:
+    inputs:
+      distribution:
+        required: false
+        type: string
+        default: temurin
+      java-version:
+        required: false
+        type: string
+      artifact-path:
+        required: false
+        type: string
+        default: |
+          build
+    secrets:
+      SSH_PRIVATE_KEY:
+        required: true
+      HOST:
+        required: true
+      PORT:
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: cache
+        uses: actions/cache@v3
+        with:
+          key: cache
+          path: |
+            ~/.gradle/wrapper
+            ~/.gradle/jdks
+            ~/.gradle/caches
+      - name: setup-java
+        uses: actions/setup-java@v3
+        if: ${{ inputs.java-version != '' }}
+        with:
+          distribution: ${{ inputs.distribution }}
+          java-version: ${{ inputs.java-version }}
+      - id: image-name
+        name: image-name
+        run: |
+          echo "image-name=${{ github.actor }}/${{ github.event.repository.name:latest }}" >> $GITHUB_OUTPUT
+      - name: build-image
+        run: sh gradlew --refresh-dependencies bootBuildImage --imageName=${{ steps.image-name.outputs.image-name }}
+      -
+        name: login
+        uses: docker/login-action@v2
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+      - name: push-image
+        run: docker push ${{ steps.image-name.outputs.image-name }}
+      - name: init-ssh-pre
+        run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-pre.sh | sudo sh
+      - name: init-ssh
+        run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh.sh | sh
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      -
+        name: start
+        run: ssh -o LogLevel=ERROR -p ${{ secrets.PORT }} root@${{ secrets.HOST }} \
+          "cd /home/program/${{ github.event.repository.name }} && dcomposeinit -d"
+      - name: init-ssh-clean
+        if: ${{ always() }}
+        run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-clean.sh | sh
+      - id: artifact-name
+        name: artifact-name
+        run: |
+          echo "artifact-name=${{ github.event.repository.name }}.${{ github.ref_name }}.${{ github.run_id }}" >> $GITHUB_OUTPUT
+      - name: upload-artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ steps.artifact-name.outputs.artifact-name }}
+          path: ${{ inputs.artifact-path }}
+          retention-days: 3
