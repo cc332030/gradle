@@ -4,6 +4,13 @@ name:  deploy-image-dockerfile
 on:
   workflow_call:
     inputs:
+      distribution:
+        required: false
+        type: string
+        default: temurin
+      java-version:
+        required: false
+        type: string
       build-before-image:
         required: false
         type: string
@@ -12,13 +19,11 @@ on:
         required: false
         type: string
         default: dockerfile
-      distribution:
+      artifact-path:
         required: false
         type: string
-        default: temurin
-      java-version:
-        required: false
-        type: string
+        default: |
+          build
     secrets:
       SSH_PRIVATE_KEY:
         required: true
@@ -49,7 +54,7 @@ jobs:
       -
         name: setup-java
         uses: actions/setup-java@v3
-        if: ${{ inputs.build-before-image }}
+        if: ${{ inputs.java-version != '' && inputs.build-before-image }}
         with:
           distribution: ${{ inputs.distribution }}
           java-version: ${{ inputs.java-version }}
@@ -84,6 +89,18 @@ jobs:
         name: start
         run: ssh -o LogLevel=ERROR -p ${{ secrets.PORT }} root@${{ secrets.HOST }} \
           "cd /home/program/${{ github.event.repository.name }} && dcomposeinit -d"
+      -
+        id: artifact-name
+        name: artifact-name
+        run: |
+          echo "artifact-name=${{ github.event.repository.name }}.${{ github.ref_name }}.${{ github.run_id }}" >> $GITHUB_OUTPUT
+      -
+        name: upload-artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ steps.artifact-name.outputs.artifact-name }}
+          path: ${{ inputs.artifact-path }}
+          retention-days: 3
       -
         name: init-ssh-clean
         if: ${{ always() }}
