@@ -69,6 +69,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.DOCKER_TOKEN }}
       -
+        id: image-name
+        name: image-name
+        run: |
+          echo "image-name=${{ github.actor }}/${{ github.event.repository.name }}" >> $GITHUB_OUTPUT
+      -
         name: build-push
         uses: docker/build-push-action@v4
         with:
@@ -76,8 +81,10 @@ jobs:
           file: ${{ inputs.dockerfile }}
           push: true
           tags: |
-            ${{ github.actor }}/${{ github.event.repository.name }}:${{ github.ref_name }}
-            ${{ github.actor }}/${{ github.event.repository.name }}:latest
+            ${{ steps.image-name.outputs.image-name }}:${{ github.ref_name }}
+            ${{ steps.image-name.outputs.image-name }}:latest
+          cache-from: type=registry,ref=${{ steps.image-name.outputs.image-name }}:buildcache
+          cache-to: type=registry,ref=${{ steps.image-name.outputs.image-name }}:buildcache,mode=max
       -
         name: init-ssh-pre
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-pre.sh | sudo sh
