@@ -8,6 +8,10 @@ on:
         required: false
         type: string
         default: true
+      dockerfile:
+        required: false
+        type: string
+        default: dockerfile
     secrets:
       SSH_PRIVATE_KEY:
         required: true
@@ -56,7 +60,7 @@ jobs:
         name: build-push
         uses: docker/build-push-action@v4
         with:
-          context: .
+          file: ${{ inputs.dockerfile }}
           push: true
           tags: |
             ${{ github.actor }}/${{ github.event.repository.name }}:${{ github.ref_name }}
