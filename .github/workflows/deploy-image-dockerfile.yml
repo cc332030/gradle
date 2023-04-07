@@ -63,16 +63,16 @@ jobs:
         if: ${{ inputs.build-before-image }}
         run: sh gradlew --refresh-dependencies build
       -
+        id: image-name
+        name: image-name
+        run: |
+          echo "image-name=${{ github.actor }}/${{ github.event.repository.name }}" >> $GITHUB_OUTPUT
+      -
         name: login
         uses: docker/login-action@v2
         with:
           username: ${{ github.actor }}
           password: ${{ secrets.DOCKER_TOKEN }}
-      -
-        id: image-name
-        name: image-name
-        run: |
-          echo "image-name=${{ github.actor }}/${{ github.event.repository.name }}" >> $GITHUB_OUTPUT
       -
         name: docker-buildx
         uses: docker/setup-buildx-action@v2
