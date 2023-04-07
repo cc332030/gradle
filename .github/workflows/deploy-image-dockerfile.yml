@@ -72,6 +72,7 @@ jobs:
         name: build-push
         uses: docker/build-push-action@v4
         with:
+          context: .
           file: ${{ inputs.dockerfile }}
           push: true
           tags: |
