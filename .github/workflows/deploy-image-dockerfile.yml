@@ -86,8 +86,8 @@ jobs:
           tags: |
             ${{ steps.image-name.outputs.image-name }}:${{ github.ref_name }}
             ${{ steps.image-name.outputs.image-name }}:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=registry,ref=${{ steps.image-name.outputs.image-name }}:latest
+          cache-to: type=inline
       -
         name: init-ssh-pre
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-pre.sh | sudo sh
