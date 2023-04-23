@@ -44,7 +44,7 @@ jobs:
       -
         name: cache
         uses: actions/cache@v3
-        if: ${{ inputs.build-before-image }}
+        if: ${{ inputs.build-before-image == 'true' }}
         with:
           key: gradle
           path: |
@@ -54,13 +54,13 @@ jobs:
       -
         name: setup-java
         uses: actions/setup-java@v3
-        if: ${{ inputs.java-version != '' && inputs.build-before-image }}
+        if: ${{ inputs.build-before-image == 'true' && inputs.java-version != '' }}
         with:
           distribution: ${{ inputs.distribution }}
           java-version: ${{ inputs.java-version }}
       -
         name: build
-        if: ${{ inputs.build-before-image }}
+        if: ${{ inputs.build-before-image == 'true' }}
         run: sh gradlew --refresh-dependencies build
       -
         id: image-name
