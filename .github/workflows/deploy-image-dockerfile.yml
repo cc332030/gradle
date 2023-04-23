@@ -11,10 +11,11 @@ on:
       java-version:
         required: false
         type: string
+        default: 17
       build-before-image:
         required: false
         type: string
-        default: false
+        default: true
       dockerfile:
         required: false
         type: string
