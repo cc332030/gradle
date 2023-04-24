@@ -67,7 +67,7 @@ jobs:
         with:
           name: ${{ steps.artifact-name.outputs.artifact-name }}
           path: ${{ inputs.artifact-path }}
-          retention-days: 3
+          retention-days: 7
       - name: init-ssh-pre
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-pre.sh | sudo sh
       - name: init-ssh

@@ -71,7 +71,7 @@ jobs:
         with:
           name: ${{ steps.artifact-name.outputs.artifact-name }}
           path: ${{ inputs.artifact-path }}
-          retention-days: 3
+          retention-days: 7
       - name: init-gpg-clean
         if: ${{ always() }}
         run: curl -sL https://github.com/cc332030/gnupg/raw/main/script/init-gpg/init-gpg-clean.sh | sh

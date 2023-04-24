@@ -52,4 +52,4 @@ jobs:
         with:
           name: ${{ steps.artifact-name.outputs.artifact-name }}
           path: ${{ inputs.artifact-path }}
-          retention-days: 3
+          retention-days: 7
