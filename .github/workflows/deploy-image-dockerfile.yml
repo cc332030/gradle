@@ -76,7 +76,7 @@ jobs:
         name: image-name-default
         if: ${{ inputs.image-name != '' }}
         run: |
-          echo "IMAGE_NAME=${{ inputs.image-name }}" >> $GITHUB_ENV
+          echo "IMAGE_NAME=${{ inputs.registry }}/${{ inputs.image-name }}" >> $GITHUB_ENV
       -
         name: image-name
         if: ${{ inputs.image-name == '' }}
