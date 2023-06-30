@@ -96,17 +96,17 @@ jobs:
           cache-to: type=registry,ref=${{ steps.image-name.outputs.image-name }}:buildcache,mode=max
       -
         name: init-ssh-pre
-        if: ${{ secrets.SSH_PRIVATE_KEY != '' }}
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-pre.sh | sudo sh
       -
+        id: init-ssh
         name: init-ssh
-        if: ${{ secrets.SSH_PRIVATE_KEY != '' }}
+        if: ${{ env.SSH_PRIVATE_KEY != '' }}
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh.sh | sh
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       -
         name: start
-        if: ${{ secrets.SSH_PRIVATE_KEY != '' }}
+        if: ${{ steps.init-ssh.outcome == 'success' }}
         run: ssh -o LogLevel=ERROR -p ${{ secrets.PORT }} root@${{ secrets.HOST }} \
           "cd /home/program/${{ github.event.repository.name }} && dcomposeinit -d"
       -
