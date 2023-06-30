@@ -16,6 +16,8 @@ on:
         required: false
         type: string
         default: true
+      registry:
+        required: false
       dockerfile:
         required: false
         type: string
@@ -27,12 +29,15 @@ on:
           build
     secrets:
       SSH_PRIVATE_KEY:
-        required: true
+        required: false
       HOST:
         required: true
       PORT:
         required: true
-      DOCKER_TOKEN:
+      REGISTRY_USERNAME:
+        required: false
+        default: ${{ github.actor }}
+      REGISTRY_PASSWORD:
         required: true
 
 jobs:
@@ -75,8 +80,9 @@ jobs:
         name: login
         uses: docker/login-action@v2
         with:
-          username: ${{ github.actor }}
-          password: ${{ secrets.DOCKER_TOKEN }}
+          registry: ${{ inputs.registry }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
       -
         name: build-push
         uses: docker/build-push-action@v4
@@ -91,14 +97,17 @@ jobs:
           cache-to: type=registry,ref=${{ steps.image-name.outputs.image-name }}:buildcache,mode=max
       -
         name: init-ssh-pre
+        if: ${{ secrets.SSH_PRIVATE_KEY != '' }}
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-pre.sh | sudo sh
       -
         name: init-ssh
+        if: ${{ secrets.SSH_PRIVATE_KEY != '' }}
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh.sh | sh
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       -
         name: start
+        if: ${{ secrets.SSH_PRIVATE_KEY != '' }}
         run: ssh -o LogLevel=ERROR -p ${{ secrets.PORT }} root@${{ secrets.HOST }} \
           "cd /home/program/${{ github.event.repository.name }} && dcomposeinit -d"
       -
