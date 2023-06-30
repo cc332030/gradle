@@ -19,6 +19,7 @@ on:
       registry:
         required: false
         type: string
+        default: docker.io
       dockerfile:
         required: false
         type: string
@@ -93,8 +94,8 @@ jobs:
           tags: |
             ${{ steps.image-name.outputs.image-name }}:${{ github.ref_name }}
             ${{ steps.image-name.outputs.image-name }}:latest
-          cache-from: type=registry,ref=${{ steps.image-name.outputs.image-name }}:buildcache
-          cache-to: type=registry,ref=${{ steps.image-name.outputs.image-name }}:buildcache,mode=max
+          cache-from: type=registry,ref=${{ inputs.registry }}/${{ steps.image-name.outputs.image-name }}:buildcache
+          cache-to: type=registry,ref=${{ inputs.registry }}/${{ steps.image-name.outputs.image-name }}:buildcache,mode=max
       -
         name: init-ssh-pre
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-pre.sh | sudo sh
