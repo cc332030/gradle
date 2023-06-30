@@ -33,9 +33,9 @@ on:
       SSH_PRIVATE_KEY:
         required: false
       HOST:
-        required: true
+        required: false
       PORT:
-        required: true
+        required: false
       IMAGE_NAME:
         required: false
       REGISTRY_USERNAME:
