@@ -72,14 +72,14 @@ jobs:
         if: ${{ inputs.build-before-image == 'true' }}
         run: sh gradlew --refresh-dependencies build
       -
-        name: image-name-default
+        name: image-name
         if: ${{ env.IMAGE_NAME != '' }}
         env:
           IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
         run: |
           echo "IMAGE_NAME=${{ inputs.registry }}/${{ env.IMAGE_NAME }}" >> $GITHUB_ENV
       -
-        name: image-name
+        name: image-name-default
         if: ${{ env.IMAGE_NAME == '' }}
         env:
           IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
