@@ -24,9 +24,6 @@ on:
         required: false
         type: string
         default: dockerfile
-      image-name:
-        required: false
-        type: string
       artifact-path:
         required: false
         type: string
@@ -39,6 +36,8 @@ on:
         required: true
       PORT:
         required: true
+      IMAGE_NAME:
+        required: false
       REGISTRY_USERNAME:
         required: true
       REGISTRY_PASSWORD:
@@ -74,14 +73,19 @@ jobs:
         run: sh gradlew --refresh-dependencies build
       -
         name: image-name-default
-        if: ${{ inputs.image-name != '' }}
+        if: ${{ env.IMAGE_NAME != '' }}
+        env:
+          IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
         run: |
           echo "IMAGE_NAME=${{ inputs.registry }}/${{ inputs.image-name }}" >> $GITHUB_ENV
       -
         name: image-name
-        if: ${{ inputs.image-name == '' }}
+        if: ${{ env.IMAGE_NAME == '' }}
+        env:
+          IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
         run: |
           echo "IMAGE_NAME=${{ inputs.registry }}/${{ secrets.REGISTRY_USERNAME }}/${{ github.event.repository.name }}" >> $GITHUB_ENV
+
       -
         name: buildx
         uses: docker/setup-buildx-action@v2
