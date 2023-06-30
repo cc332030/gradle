@@ -24,6 +24,9 @@ on:
         required: false
         type: string
         default: dockerfile
+      image-name:
+        required: false
+        type: string
       artifact-path:
         required: false
         type: string
@@ -70,10 +73,15 @@ jobs:
         if: ${{ inputs.build-before-image == 'true' }}
         run: sh gradlew --refresh-dependencies build
       -
-        id: image-name
-        name: image-name
+        name: image-name-default
+        if: ${{ inputs.image-name != '' }}
         run: |
-          echo "image-name=${{ inputs.registry }}/${{ github.actor }}/${{ github.event.repository.name }}" >> $GITHUB_OUTPUT
+          echo "IMAGE_NAME=${{ inputs.image-name }}" >> $GITHUB_ENV
+      -
+        name: image-name
+        if: ${{ inputs.image-name == '' }}
+        run: |
+          echo "IMAGE_NAME=${{ inputs.registry }}/${{ secrets.REGISTRY_USERNAME }}/${{ github.event.repository.name }}" >> $GITHUB_ENV
       -
         name: buildx
         uses: docker/setup-buildx-action@v2
@@ -92,10 +100,10 @@ jobs:
           file: ${{ inputs.dockerfile }}
           push: true
           tags: |
-            ${{ steps.image-name.outputs.image-name }}:${{ github.ref_name }}
-            ${{ steps.image-name.outputs.image-name }}:latest
-          cache-from: type=registry,ref=${{ steps.image-name.outputs.image-name }}:buildcache
-          cache-to: type=registry,ref=${{ steps.image-name.outputs.image-name }}:buildcache,mode=max
+            ${{ env.IMAGE_NAME }}:${{ github.ref_name }}
+            ${{ env.IMAGE_NAME }}:latest
+          cache-from: type=registry,ref=${{ env.IMAGE_NAME }}:buildcache
+          cache-to: type=registry,ref=${{ env.IMAGE_NAME }}:buildcache,mode=max
       -
         name: init-ssh-pre
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-pre.sh | sudo sh
