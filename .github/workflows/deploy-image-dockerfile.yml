@@ -35,8 +35,7 @@ on:
       PORT:
         required: true
       REGISTRY_USERNAME:
-        required: false
-        default: ${{ github.actor }}
+        required: true
       REGISTRY_PASSWORD:
         required: true
 
