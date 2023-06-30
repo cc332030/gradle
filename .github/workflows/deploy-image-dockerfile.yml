@@ -18,6 +18,7 @@ on:
         default: true
       registry:
         required: false
+        type: string
       dockerfile:
         required: false
         type: string
