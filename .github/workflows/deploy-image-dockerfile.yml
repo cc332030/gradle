@@ -97,7 +97,7 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
       -
-        name: get dockerfile
+        name: dockerfile
         run: if [ ! -f dockerfile ]; then wget https://github.com/cc332030/gradle/raw/master/docker/dockerfile; fi
       -
         name: build-push
