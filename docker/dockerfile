@@ -1,0 +1,45 @@
+
+ARG BOOT_JAR_PATH=build/libs/boot.jar
+
+ARG JAVA_VERSION=17
+
+ARG WORKDIR=/app
+
+ARG EXTRACTED=/extracted
+
+ARG TMP=/tmp
+
+FROM ibm-semeru-runtimes:open-${JAVA_VERSION}-jdk as builder
+ARG TMP
+VOLUME ${TMP}
+ARG WORKDIR
+WORKDIR ${WORKDIR}
+
+COPY . ./
+
+ARG BOOT_JAR_PATH
+RUN --mount=type=cache,target=~/.gradle/wrapper \
+    --mount=type=cache,target=~/.gradle/jdks \
+    --mount=type=cache,target=~/.gradle/caches \
+    if [ ! -f $(echo ${BOOT_JAR_PATH}) ]; then sh gradlew build; fi
+
+ARG EXTRACTED
+RUN java -Djarmode=layertools -jar $(echo ${BOOT_JAR_PATH}) extract --destination $(echo ${EXTRACTED})
+
+FROM ibm-semeru-runtimes:open-${JAVA_VERSION}-jre
+ARG TMP
+VOLUME ${TMP}
+ARG WORKDIR
+WORKDIR ${WORKDIR}
+
+RUN echo "Asia/Shanghai" > /etc/timezone
+
+EXPOSE 80
+
+ENTRYPOINT ["java","org.springframework.boot.loader.JarLauncher"]
+
+ARG EXTRACTED
+COPY --from=builder ${EXTRACTED}/spring-boot-loader/ ./
+COPY --from=builder ${EXTRACTED}/dependencies/ ./
+COPY --from=builder ${EXTRACTED}/snapshot-dependencies/ ./
+COPY --from=builder ${EXTRACTED}/application/ ./
