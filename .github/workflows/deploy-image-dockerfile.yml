@@ -98,7 +98,7 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
       -
         name: dockerfile
-        run: if [ ! -f dockerfile ]; then wget -cq --show-progress https://github.com/cc332030/gradle/raw/master/docker/dockerfile; fi
+        run: if [ ! -f dockerfile ]; then wget -q --show-progress -O dockerfile https://github.com/cc332030/gradle/raw/master/docker/dockerfile; fi
       -
         name: build-push
         uses: docker/build-push-action@v4
