@@ -23,7 +23,7 @@ on:
       artifact-enable:
         required: false
         type: string
-        default: true
+        default: false
       artifact-path:
         required: false
         type: string
