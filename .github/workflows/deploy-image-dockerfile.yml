@@ -23,7 +23,7 @@ on:
       artifact-enable:
         required: false
         type: string
-        default: false
+        default: true
       artifact-path:
         required: false
         type: string
@@ -139,7 +139,7 @@ jobs:
         with:
           name: ${{ steps.artifact-name.outputs.artifact-name }}
           path: ${{ inputs.artifact-path }}
-          retention-days: 7
+          retention-days: 1
       -
         name: init-ssh-clean
         if: ${{ always() }}
