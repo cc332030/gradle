@@ -55,7 +55,7 @@ jobs:
         uses: actions/cache@v3
         if: ${{ inputs.build-before-image == 'true' }}
         with:
-          key: gradle
+          key: ${{ runner.os }}-gradle-${{ github.head_ref }}-${{ hashFiles('build.gradle.kts','build.gradle','gradle/wrapper/gradle-wrapper.properties') }}
           path: |
             ~/.gradle/wrapper
             ~/.gradle/jdks
