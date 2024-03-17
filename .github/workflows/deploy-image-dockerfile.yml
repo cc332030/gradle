@@ -11,7 +11,7 @@ on:
       java-version:
         required: false
         type: string
-        default: 17
+        default: 21
       build-before-image:
         required: false
         type: string

@@ -11,6 +11,7 @@ on:
       java-version:
         required: false
         type: string
+        default: 21
       command:
         required: false
         type: string
