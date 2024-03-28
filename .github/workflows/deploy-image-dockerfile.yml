@@ -68,7 +68,7 @@ jobs:
         uses: actions/cache@v4
         if: ${{ inputs.build-before-image == 'true' }}
         with:
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/gradle.properties','**/build.gradle*','**/settings.gradle*','**/gradle-wrapper.properties') }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('.env','**/gradle.properties','**/build.gradle*','**/settings.gradle*','**/gradle-wrapper.properties') }}
           path: |
             ~/.gradle/wrapper
             ~/.gradle/jdks
