@@ -61,7 +61,7 @@ jobs:
         uses: actions/checkout@v4
       -
         name: import-env
-        if: ${{ hashFiles({{inputs.env-file}}) != '' }}
+        if: ${{ hashFiles(inputs.env-file) != '' }}
         run: cat {{inputs.env-file}} >> $GITHUB_ENV
       -
         name: cache
