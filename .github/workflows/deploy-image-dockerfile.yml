@@ -29,6 +29,10 @@ on:
         type: string
         default: |
           build
+      env-file:
+        required: false
+        type: string
+        default: .env
     secrets:
       SSH_PRIVATE_KEY:
         required: false
@@ -53,11 +57,12 @@ jobs:
         run: |
           echo "JAVA_VERSION=${{ inputs.java-version }}" >> $GITHUB_ENV
       -
-        name: import-env
-        run: ls -alh; cat .env >> $GITHUB_ENV
-      -
         name: checkout
         uses: actions/checkout@v4
+      -
+        name: import-env
+        if: ${{ hashFiles({{inputs.env-file}}) != '' }}
+        run: cat {{inputs.env-file}} >> $GITHUB_ENV
       -
         name: cache
         uses: actions/cache@v4
