@@ -52,13 +52,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       -
+        name: checkout
+        uses: actions/checkout@v4
+      -
         name: set-java-version
         if: ${{ inputs.java-version != '' }}
         run: |
           echo "JAVA_VERSION=${{ inputs.java-version }}" >> $GITHUB_ENV
-      -
-        name: checkout
-        uses: actions/checkout@v4
       -
         name: import-env
         if: ${{ hashFiles(inputs.env-file) != '' }}
