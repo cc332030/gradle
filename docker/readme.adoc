@@ -1,0 +1,7 @@
+
+= docker
+
+[source,shell]
+----
+docker build . --build-arg JAVA_VERSION=17
+----
