@@ -9,7 +9,7 @@ ARG EXTRACTED=/extracted
 
 ARG TMP=/tmp
 
-FROM ibm-semeru-runtimes:open-${JAVA_VERSION}-jdk as builder
+FROM docker.io/ibm-semeru-runtimes:open-${JAVA_VERSION}-jdk as builder
 ARG TMP
 VOLUME ${TMP}
 ARG WORKDIR
@@ -26,7 +26,7 @@ RUN --mount=type=cache,target=~/.gradle/wrapper \
 ARG EXTRACTED
 RUN java -Djarmode=layertools -jar $(echo ${BOOT_JAR_PATH}) extract --destination $(echo ${EXTRACTED})
 
-FROM ibm-semeru-runtimes:open-${JAVA_VERSION}-jre
+FROM docker.io/ibm-semeru-runtimes:open-${JAVA_VERSION}-jre
 ARG TMP
 VOLUME ${TMP}
 ARG WORKDIR
