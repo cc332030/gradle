@@ -1,12 +1,11 @@
 
-ARG BOOT_JAR_PATH=build/libs/boot.jar
-
 ARG JAVA_VERSION=21
 
+ARG BOOT_COMMAND=sh gradlew build --refresh-dependencies
+ARG BOOT_JAR_PATH=build/libs/boot.jar
+
 ARG WORKDIR=/app
-
 ARG EXTRACTED=/extracted
-
 ARG TMP=/tmp
 
 FROM docker.io/ibm-semeru-runtimes:open-${JAVA_VERSION}-jdk as builder
@@ -17,11 +16,12 @@ WORKDIR ${WORKDIR}
 
 COPY . ./
 
+ARG BOOT_COMMAND
 ARG BOOT_JAR_PATH
 RUN --mount=type=cache,target=~/.gradle/wrapper \
     --mount=type=cache,target=~/.gradle/jdks \
     --mount=type=cache,target=~/.gradle/caches \
-    if [ ! -f $(echo ${BOOT_JAR_PATH}) ]; then sh gradlew build; fi
+    if [ ! -f $(echo ${BOOT_JAR_PATH}) ]; then ${BOOT_COMMAND} ; fi
 
 ARG EXTRACTED
 RUN java -Djarmode=layertools -jar $(echo ${BOOT_JAR_PATH}) extract --destination $(echo ${EXTRACTED})
