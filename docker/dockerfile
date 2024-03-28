@@ -1,7 +1,7 @@
 
 ARG JAVA_VERSION=21
 
-ARG BUILD_COMMAND=gradlew build --refresh-dependencies
+ARG BUILD_COMMAND="sh gradlew build --refresh-dependencies"
 ARG BOOT_JAR_PATH=build/libs/boot.jar
 
 ARG WORKDIR=/app
@@ -21,7 +21,7 @@ ARG BOOT_JAR_PATH
 RUN --mount=type=cache,target=~/.gradle/wrapper \
     --mount=type=cache,target=~/.gradle/jdks \
     --mount=type=cache,target=~/.gradle/caches \
-    if [ ! -f $(echo ${BOOT_JAR_PATH}) ]; then sh ${BUILD_COMMAND} ; fi
+    if [ ! -f $(echo ${BOOT_JAR_PATH}) ]; then ${BUILD_COMMAND} ; fi
 
 ARG EXTRACTED
 RUN java -Djarmode=layertools -jar $(echo ${BOOT_JAR_PATH}) extract --destination $(echo ${EXTRACTED})
