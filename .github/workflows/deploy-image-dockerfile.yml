@@ -62,7 +62,7 @@ jobs:
       -
         name: import-env
         if: ${{ hashFiles(inputs.env-file) != '' }}
-        run: cat {{inputs.env-file}} >> $GITHUB_ENV
+        run: cat ${{inputs.env-file}} >> $GITHUB_ENV
       -
         name: cache
         uses: actions/cache@v4
