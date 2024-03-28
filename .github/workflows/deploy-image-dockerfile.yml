@@ -54,7 +54,7 @@ jobs:
           echo "JAVA_VERSION=${{ inputs.java-version }}" >> $GITHUB_ENV
       -
         name: import-env
-        run: cat .env >> $GITHUB_ENV
+        run: ls -alh; cat .env >> $GITHUB_ENV
       -
         name: checkout
         uses: actions/checkout@v4
