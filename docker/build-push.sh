@@ -50,7 +50,7 @@ curl -sLO https://github.com/cc332030/gradle/raw/master/docker/dockerfile
 
 docker login -u="${AUTHOR}" -p="${DOCKER_TOKEN}"
 
-BUILDX_NAME=buildx-${AUTHOR}
+BUILDX_NAME=buildx-dockerfile
 
 docker buildx rm "${BUILDX_NAME}" || true
 docker buildx create --name "${BUILDX_NAME}" --driver docker-container --use
