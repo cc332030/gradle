@@ -26,11 +26,13 @@ fi
 REGISTRY="${REGISTRY:=docker.io}"
 
 IMAGE=${REGISTRY}/${AUTHOR}/${PROJECT}
+IMAGE_TAG="${IMAGE_TAG:=latest}"
+IMAGE_WITH_TAG=${IMAGE}:${IMAGE_TAG}
 
 echo "
-IMAGE: ${IMAGE}"
+IMAGE: ${IMAGE_WITH_TAG}
+"
 
-IMAGE_WITH_TAG=${IMAGE}:latest
 IMAGE_BUILD_CACHE=${IMAGE}:buildcache
 
 if [ "${JAVA_VERSION}" ]; then
