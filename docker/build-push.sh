@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# curl -sL https://github.com/cc332030/gradle/raw/master/docker/build-push.sh | sh
+
 set -e
 
 if test -f ".env"; then
@@ -24,16 +26,23 @@ fi
 REGISTRY="${REGISTRY:=docker.io}"
 
 IMAGE=${REGISTRY}/${AUTHOR}/${PROJECT}
+
+echo "
+IMAGE: ${IMAGE}"
+
 IMAGE_WITH_TAG=${IMAGE}:latest
 IMAGE_BUILD_CACHE=${IMAGE}:buildcache
 
 if [ "${JAVA_VERSION}" ]; then
+  echo "JAVA_VERSION: ${JAVA_VERSION}"
   BUILD_ARGS="${BUILD_ARGS} --build-arg JAVA_VERSION=${JAVA_VERSION}"
 fi
 if [ "${BUILD_COMMAND}" ]; then
+  echo "BUILD_COMMAND: ${BUILD_COMMAND}"
   BUILD_ARGS="${BUILD_ARGS} --build-arg BUILD_COMMAND=\"${BUILD_COMMAND}\""
 fi
 if [ "${BOOT_JAR_PATH}" ]; then
+  echo "BOOT_JAR_PATH: ${BOOT_JAR_PATH}"
   BUILD_ARGS="${BUILD_ARGS} --build-arg BOOT_JAR_PATH=\"${BOOT_JAR_PATH}\""
 fi
 
