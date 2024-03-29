@@ -62,7 +62,7 @@ jobs:
           distribution: ${{ inputs.distribution }}
           java-version: ${{ inputs.java-version }}
       - name: publish
-        run: sh gradlew --refresh-dependencies publish
+        run: sh gradlew -U publish
       - id: artifact-name
         name: artifact-name
         run: |

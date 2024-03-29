@@ -1,7 +1,7 @@
 
 ARG JAVA_VERSION=21
 
-ARG BUILD_COMMAND="sh gradlew build --refresh-dependencies"
+ARG BUILD_COMMAND="sh gradlew build -U"
 ARG BOOT_JAR_PATH=build/libs/boot.jar
 
 ARG WORKDIR=/app

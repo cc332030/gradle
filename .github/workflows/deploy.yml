@@ -71,7 +71,7 @@ jobs:
           distribution: ${{ inputs.distribution }}
           java-version: ${{ env.JAVA_VERSION }}
       - name: build
-        run: sh gradlew --refresh-dependencies build
+        run: sh gradlew build -U
       - id: artifact-name
         name: artifact-name
         run: |

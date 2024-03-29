@@ -15,7 +15,7 @@ on:
       command:
         required: false
         type: string
-        default: sh gradlew --refresh-dependencies build
+        default: sh gradlew build -U
       artifact-path:
         required: false
         type: string

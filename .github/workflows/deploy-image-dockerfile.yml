@@ -83,7 +83,7 @@ jobs:
       -
         name: build
         if: ${{ inputs.build-before-image == 'true' }}
-        run: sh gradlew --refresh-dependencies build
+        run: sh gradlew build -U
       -
         name: image-name
         if: ${{ env.IMAGE_NAME != '' }}
