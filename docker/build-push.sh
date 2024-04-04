@@ -63,3 +63,5 @@ docker buildx build \
   --cache-to type=registry,ref="${IMAGE_BUILD_CACHE}",mode=max \
   --tag "${IMAGE_WITH_TAG}" \
   --push .
+
+docker buildx rm "${BUILDX_NAME}" || true
