@@ -118,7 +118,6 @@ jobs:
         with:
           context: .
           push: true
-          platforms: linux/amd64,linux/arm64
           build-args: |
             JAVA_VERSION=${{ env.JAVA_VERSION }}
           tags: |
