@@ -1,6 +1,12 @@
 
 = gradle
 
+update wrapper
+[source,shell]
+----
+gradlew wrapper --gradle-version latest
+----
+
 docker run
 [source,shell]
 ----
