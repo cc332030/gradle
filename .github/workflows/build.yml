@@ -15,7 +15,7 @@ on:
       command:
         required: false
         type: string
-        default: sh gradlew build -U
+        default: sh gradlew clean build -U
       artifact-path:
         required: false
         type: string
