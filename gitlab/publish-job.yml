@@ -2,7 +2,7 @@
 jdk-version-runner: 25
 jdk-version-compile: 25
 
-.publish_job: &publish_job
+.publish-job: &publish-job
   - env:
       JDK_VERSION_RUNNER: !reference [jdk-version-runner]
       JDK_VERSION_COMPILE: !reference [jdk-version-compile]
