@@ -3,11 +3,11 @@ jdk-version: 21
 
 .publish: &publish
   - env:
-      JDK_VERSION: !reference [jdk-version]
+      JDK_VERSION_CONFIG: !reference [jdk-version]
     services:
       - docker
     docker:
-      image: ibm-semeru-runtimes:open-${JDK_VERSION}-jdk
+      image: ibm-semeru-runtimes:open-${JDK_VERSION_CONFIG}-jdk
       volumes:
         - /root/.gradle/caches:copy-on-write
         - /root/.gradle/wrapper:copy-on-write
@@ -18,6 +18,8 @@ jdk-version: 21
         script: |
           sh gradlew clean publish
         env:
+          JDK_VERSION: ${JDK_VERSION}
+
           NEXUS_ID: ${CNB_GROUP_SLUG}
           NEXUS_CENTRAL: https://mirrors.cloud.tencent.com/nexus/repository/maven-public/
           NEXUS_USERNAME: ${CNB_TOKEN_USER_NAME}
