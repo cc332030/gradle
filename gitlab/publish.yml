@@ -1,0 +1,38 @@
+
+jdk-version: 21
+
+.publish: &publish
+  - env:
+      JDK_VERSION: !reference [jdk-version]
+    services:
+      - docker
+    docker:
+      image: ibm-semeru-runtimes:open-${JDK_VERSION}-jdk
+      volumes:
+        - /root/.gradle/caches:copy-on-write
+        - /root/.gradle/wrapper:copy-on-write
+    stages:
+
+      - name: publish
+        imports: https://cnb.cool/${CNB_GROUP_SLUG}/secrets/-/blob/main/secrets.yml
+        script: |
+          sh gradlew clean publish
+        env:
+          NEXUS_ID: ${CNB_GROUP_SLUG}
+          NEXUS_CENTRAL: https://mirrors.cloud.tencent.com/nexus/repository/maven-public/
+          NEXUS_USERNAME: ${CNB_TOKEN_USER_NAME}
+          NEXUS_PASSWORD: ${CNB_TOKEN_ARTIFACTORY}
+
+          NEXUS_SNAPSHOT_ID: ${CNB_GROUP_SLUG}-snapshot
+          NEXUS_SNAPSHOT_URL: https://maven.cnb.cool/${CNB_GROUP_SLUG}/maven-snapshot/-/packages/
+          NEXUS_RELEASE_ID: ${CNB_GROUP_SLUG}-release
+          NEXUS_RELEASE_URL: https://maven.cnb.cool/${CNB_GROUP_SLUG}/maven-release/-/packages/
+
+"(main|master)":
+  pull_request:
+    - <<: *publish
+  push:
+    - <<: *publish
+$:
+  tag_push:
+    - <<: *publish
