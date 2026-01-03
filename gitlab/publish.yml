@@ -21,7 +21,7 @@ jdk-version: 21
           JDK_VERSION: ${JDK_VERSION}
 
           NEXUS_ID: ${CNB_GROUP_SLUG}
-          NEXUS_CENTRAL: https://mirrors.cloud.tencent.com/nexus/repository/maven-public/
+          MAVEN_CENTRAL: https://mirrors.cloud.tencent.com/nexus/repository/maven-public/
           NEXUS_USERNAME: ${CNB_TOKEN_USER_NAME}
           NEXUS_PASSWORD: ${CNB_TOKEN_ARTIFACTORY}
 
