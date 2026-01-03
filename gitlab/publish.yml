@@ -1,5 +1,4 @@
 
-
 include:
   - https://cnb.cool/cc332030/gradle/-/blob/master/gitlab/publish-job.yml
 
