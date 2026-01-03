@@ -4,29 +4,28 @@ variables:
   jdk-version-compile: 25
 
 .publish-job:
-  stage: publish
-  services:
-    - docker
-  docker:
-    image: ibm-semeru-runtimes:open-${jdk-version-runner}-jdk
-    volumes:
-      - /root/.gradle/caches:copy-on-write
-      - /root/.gradle/wrapper:copy-on-write
-  stages:
+  - services:
+      - docker
+    docker:
+      image: ibm-semeru-runtimes:open-${jdk-version-runner}-jdk
+      volumes:
+        - /root/.gradle/caches:copy-on-write
+        - /root/.gradle/wrapper:copy-on-write
+    stages:
 
-    - name: publish
-      imports: https://cnb.cool/${CNB_GROUP_SLUG}/secrets/-/blob/main/secrets.yml
-      script: |
-        sh gradlew clean publish
-      env:
-        JDK_VERSION: ${jdk-version-compile}
+      - name: publish
+        imports: https://cnb.cool/${CNB_GROUP_SLUG}/secrets/-/blob/main/secrets.yml
+        script: |
+          sh gradlew clean publish
+        env:
+          JDK_VERSION: ${jdk-version-compile}
 
-        NEXUS_ID: ${CNB_GROUP_SLUG}
-        MAVEN_CENTRAL: https://mirrors.cloud.tencent.com/nexus/repository/maven-public/
-        NEXUS_USERNAME: ${CNB_TOKEN_USER_NAME}
-        NEXUS_PASSWORD: ${CNB_TOKEN_ARTIFACTORY}
+          NEXUS_ID: ${CNB_GROUP_SLUG}
+          MAVEN_CENTRAL: https://mirrors.cloud.tencent.com/nexus/repository/maven-public/
+          NEXUS_USERNAME: ${CNB_TOKEN_USER_NAME}
+          NEXUS_PASSWORD: ${CNB_TOKEN_ARTIFACTORY}
 
-        NEXUS_SNAPSHOT_ID: ${CNB_GROUP_SLUG}-snapshot
-        NEXUS_SNAPSHOT_URL: https://maven.cnb.cool/${CNB_GROUP_SLUG}/maven-snapshot/-/packages/
-        NEXUS_RELEASE_ID: ${CNB_GROUP_SLUG}-release
-        NEXUS_RELEASE_URL: https://maven.cnb.cool/${CNB_GROUP_SLUG}/maven-release/-/packages/
+          NEXUS_SNAPSHOT_ID: ${CNB_GROUP_SLUG}-snapshot
+          NEXUS_SNAPSHOT_URL: https://maven.cnb.cool/${CNB_GROUP_SLUG}/maven-snapshot/-/packages/
+          NEXUS_RELEASE_ID: ${CNB_GROUP_SLUG}-release
+          NEXUS_RELEASE_URL: https://maven.cnb.cool/${CNB_GROUP_SLUG}/maven-release/-/packages/
