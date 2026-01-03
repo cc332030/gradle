@@ -1,11 +1,11 @@
 
 jdk-version-runner: 25
-jdk-version-compile: 25
+jdk-version: 25
 
 .publish-job: &publish-job
   - env:
       JDK_VERSION_RUNNER: !reference [jdk-version-runner]
-      JDK_VERSION_COMPILE: !reference [jdk-version-compile]
+      JDK_VERSION: !reference [jdk-version]
     services:
       - docker
     docker:
@@ -20,7 +20,7 @@ jdk-version-compile: 25
         script: |
           sh gradlew clean publish
         env:
-          JDK_VERSION: ${JDK_VERSION_COMPILE}
+          JDK_VERSION: ${JDK_VERSION}
 
           NEXUS_ID: ${CNB_GROUP_SLUG}
           MAVEN_CENTRAL: https://mirrors.cloud.tencent.com/nexus/repository/maven-public/
