@@ -14,7 +14,7 @@ docker run \
   --privileged \
   -it \
   docker.io/ibm-semeru-runtimes:open-25-jdk \
-  sh gradlew --stacktrace clean build
+  sh -c "apt update -y && apt install -y openjdk-8-jdk && sh gradlew --stacktrace clean build"
 
 docker build . --build-arg JAVA_VERSION=17
 ----
