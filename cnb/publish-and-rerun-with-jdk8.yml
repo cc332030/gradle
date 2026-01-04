@@ -18,7 +18,7 @@ jdk-version-compile: 25
       - name: publish
         imports: https://cnb.cool/${CNB_GROUP_SLUG}/secrets/-/blob/main/secrets.yml
         script: |
-          sh gradlew clean publish
+          sh gradlew --stacktrace clean publish
         env:
           JDK_VERSION: ${JDK_VERSION_COMPILE}
 
