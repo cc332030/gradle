@@ -37,15 +37,18 @@ jdk-version-compile: 25
     - <<: *publish
     - <<: *publish
       env:
+        JDK_VERSION_RUNNER: !reference [ jdk-version-runner ]
         JDK_VERSION_COMPILE: 8
   push:
     - <<: *publish
     - <<: *publish
       env:
+        JDK_VERSION_RUNNER: !reference [ jdk-version-runner ]
         JDK_VERSION_COMPILE: 8
 $:
   tag_push:
     - <<: *publish
     - <<: *publish
       env:
+        JDK_VERSION_RUNNER: !reference [ jdk-version-runner ]
         JDK_VERSION_COMPILE: 8
