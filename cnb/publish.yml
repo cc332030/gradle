@@ -25,7 +25,7 @@ jdk-version-compile: 25
 
           mkdir -p ~/.gradle
           for file in ${GRADLE_FILES}; do
-            echo "download gradle file: $file"
+            echo "download gradle file: ${file}"
             curl -sLO \
               --output-dir ~/.gradle \
               https://github.com/cc332030/gradle/raw/refs/heads/master/conf/${file}
