@@ -36,6 +36,7 @@ jdk-version-compile: 25
           echo "JDK_VERSION_COMPILE: $JDK_VERSION_COMPILE"
           for jdkVersion in $JDK_VERSION_COMPILE; do
             JDK_VERSION=$jdkVersion
+            echo "run with JDK_VERSION: $JDK_VERSION"
             sh gradlew --stacktrace clean publish
           done
         env:
