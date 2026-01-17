@@ -8,6 +8,9 @@ fun getConfigValue(key: String): String? {
     return System.getenv(key)
 }
 
+// build_lifecycle
+// https://docs.gradle.org/current/userguide/build_lifecycle.html
+
 // before settings.gradle.kts
 beforeSettings {
 
