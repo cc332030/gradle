@@ -3,7 +3,6 @@ jdk-version-runner: 25
 
 .publish: &publish
   - env:
-      JDK_VERSION_DEFINE: !reference [jdk-version-define]
       JDK_VERSION_RUNNER: !reference [jdk-version-runner]
     if: |
       [[ "${JDK_VERSION_DEFINE}" == "${JDK_VERSION_COMPILE}" \
