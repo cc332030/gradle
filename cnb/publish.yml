@@ -33,9 +33,8 @@ jdk-version-compile: 25
         script: |
           echo "JDK_VERSION_COMPILE: ${JDK_VERSION_COMPILE}"
           for jdkVersion in ${JDK_VERSION_COMPILE}; do
-            JDK_VERSION=${jdkVersion}
-            echo "run with JDK_VERSION: ${JDK_VERSION}"
-            sh gradlew clean publish
+            echo "run with JDK_VERSION: ${jdkVersion}"
+            JDK_VERSION=${jdkVersion} sh gradlew clean publish
           done
         env:
 
