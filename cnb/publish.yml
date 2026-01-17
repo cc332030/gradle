@@ -16,7 +16,7 @@ jdk-version-compile: 25
       volumes:
         - gradle-wrapper:/root/.gradle/wrapper:copy-on-write
         - gradle-jdks:/root/.gradle/jdks:copy-on-write
-        - "${CNB_REPO_NAME}-${JDK_VERSION_COMPILE}":/root/.gradle/caches:copy-on-write
+        - ${CNB_REPO_NAME}-${JDK_VERSION_RUNNER}:/root/.gradle/caches:copy-on-write
     stages:
       - name: init
         script: |
