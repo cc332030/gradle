@@ -19,8 +19,6 @@ jdk-version-compile: 25
         - ${CNB_REPO_NAME}-${JDK_VERSION_COMPILE}:/root/.gradle/caches:copy-on-write
     stages:
       - name: init
-        env:
-          GRADLE_FILES: ${GRADLE_FILES}
         script: |
 
           mkdir -p ~/.gradle
@@ -40,7 +38,6 @@ jdk-version-compile: 25
             sh gradlew --stacktrace clean publish
           done
         env:
-          JDK_VERSION_COMPILE: ${JDK_VERSION_COMPILE}
 
           NEXUS_ID: ${CNB_GROUP_SLUG}
           MAVEN_CENTRAL: https://mirrors.cloud.tencent.com/nexus/repository/maven-public/
