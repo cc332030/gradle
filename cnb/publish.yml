@@ -44,7 +44,7 @@ jdk-version-runner: 25
           NEXUS_RELEASE_URL: https://maven.cnb.cool/${CNB_GROUP_SLUG}/maven-release/-/packages/
 
 $:
-  (push|tag_push):
+  "(push|tag_push)":
     - <<: *publish
       name: jdk-compile-25
       env:
