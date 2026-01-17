@@ -24,7 +24,7 @@ jdk-version-compile: 25
         script: |
 
           mkdir -p ~/.gradle
-          for file in $GRADLE_FILES; do
+          for file in "$GRADLE_FILES"; do
             curl -sLO \
               --output-dir ~/.gradle \
               https://github.com/cc332030/gradle/raw/refs/heads/master/conf/$file
@@ -32,7 +32,7 @@ jdk-version-compile: 25
       - name: publish
         imports: https://cnb.cool/${CNB_GROUP_SLUG}/secrets/-/blob/main/secrets.yml
         script: |
-          for jdkVersion in $JDK_VERSION_COMPILE; do
+          for jdkVersion in "$JDK_VERSION_COMPILE"; do
             JDK_VERSION=$jdkVersion
             sh gradlew --stacktrace clean publish
           done
