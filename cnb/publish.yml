@@ -1,9 +1,12 @@
 
+gradle-files: "gradle.properties init.gradle.kts"
+
 jdk-version-runner: 25
 jdk-version-compile: 25
 
 .publish: &publish
   - env:
+      GRADLE_FILES: !reference [gradle-files]
       JDK_VERSION_RUNNER: !reference [jdk-version-runner]
       JDK_VERSION_COMPILE: !reference [jdk-version-compile]
     services:
@@ -16,11 +19,16 @@ jdk-version-compile: 25
         - ${CNB_REPO_NAME}-${JDK_VERSION_COMPILE}:/root/.gradle/caches:copy-on-write
     stages:
       - name: init
+        env:
+          GRADLE_FILES: ${GRADLE_FILES}
         script: |
+
           mkdir -p ~/.gradle
-          curl -sLO \
-            --output-dir ~/.gradle \
-            https://github.com/cc332030/gradle/raw/refs/heads/master/conf/init.gradle.kts
+          for file in $GRADLE_FILES; do
+            curl -sLO \
+              --output-dir ~/.gradle \
+              https://github.com/cc332030/gradle/raw/refs/heads/master/conf/$file
+          done
       - name: publish
         imports: https://cnb.cool/${CNB_GROUP_SLUG}/secrets/-/blob/main/secrets.yml
         script: |
