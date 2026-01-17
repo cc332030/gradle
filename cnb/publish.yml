@@ -1,16 +1,11 @@
 
 jdk-version-runner: 25
+jdk-version-compile: 25
 
 .publish: &publish
   - env:
       JDK_VERSION_RUNNER: !reference [jdk-version-runner]
-    if: |
-      [[ "${JDK_VERSION_DEFINE}" == "${JDK_VERSION_COMPILE}" \
-        && ("${CNB_EVENT}"=="tag_push" \
-            || ("${CNB_EVENT}"=="push" \
-                && ("${CNB_BRANCH}"=="master" || "${CNB_BRANCH}"=="main")
-        )
-      ]]
+      JDK_VERSION_COMPILE: !reference [jdk-version-compile]
     services:
       - docker
     docker:
@@ -29,9 +24,12 @@ jdk-version-runner: 25
       - name: publish
         imports: https://cnb.cool/${CNB_GROUP_SLUG}/secrets/-/blob/main/secrets.yml
         script: |
-          sh gradlew --stacktrace clean publish
+          for jdkVersion in $JDK_VERSION_COMPILE; do
+            JDK_VERSION=$jdkVersion
+            sh gradlew --stacktrace clean publish
+          done
         env:
-          JDK_VERSION: ${JDK_VERSION_COMPILE}
+          JDK_VERSION_COMPILE: ${JDK_VERSION_COMPILE}
 
           NEXUS_ID: ${CNB_GROUP_SLUG}
           MAVEN_CENTRAL: https://mirrors.cloud.tencent.com/nexus/repository/maven-public/
@@ -43,30 +41,11 @@ jdk-version-runner: 25
           NEXUS_RELEASE_ID: ${CNB_GROUP_SLUG}-release
           NEXUS_RELEASE_URL: https://maven.cnb.cool/${CNB_GROUP_SLUG}/maven-release/-/packages/
 
+"(main|master)":
+  pull_request:
+    - <<: *publish
+  push:
+    - <<: *publish
 $:
-  "(push|tag_push)":
+  tag_push:
     - <<: *publish
-      name: jdk-compile-25
-      env:
-        JDK_VERSION_DEFINE: 25
-        JDK_VERSION_COMPILE: !reference [jdk-compile-25]
-    - <<: *publish
-      name: jdk-compile-21
-      env:
-        JDK_VERSION_DEFINE: 21
-        JDK_VERSION_COMPILE: !reference [jdk-compile-21]
-    - <<: *publish
-      name: jdk-compile-17
-      env:
-        JDK_VERSION_DEFINE: 17
-        JDK_VERSION_COMPILE: !reference [jdk-compile-17]
-    - <<: *publish
-      name: jdk-compile-11
-      env:
-        JDK_VERSION_DEFINE: 11
-        JDK_VERSION_COMPILE: !reference [jdk-compile-11]
-    - <<: *publish
-      name: jdk-compile-8
-      env:
-        JDK_VERSION_DEFINE: 8
-        JDK_VERSION_COMPILE: !reference [jdk-compile-8]
