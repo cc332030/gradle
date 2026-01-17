@@ -1,11 +1,12 @@
 
 jdk-version-runner: 25
-jdk-version-compile: 25
 
 .publish: &publish
   - env:
+      JDK_VERSION_DEFINE: !reference [jdk-version-define]
       JDK_VERSION_RUNNER: !reference [jdk-version-runner]
-      JDK_VERSION_COMPILE: !reference [jdk-version-compile]
+    if: |
+      [ "${JDK_VERSION_DEFINE}" == "${JDK_VERSION_COMPILE}" ]
     services:
       - docker
     docker:
@@ -38,11 +39,38 @@ jdk-version-compile: 25
           NEXUS_RELEASE_ID: ${CNB_GROUP_SLUG}-release
           NEXUS_RELEASE_URL: https://maven.cnb.cool/${CNB_GROUP_SLUG}/maven-release/-/packages/
 
+.publish-do: &publish-do
+  - <<: *publish
+    name: jdk25
+    env:
+      JDK_VERSION_DEFINE: 25
+      JDK_VERSION_COMPILE: ${JDK_25}
+  - <<: *publish
+    name: jdk21
+    env:
+      JDK_VERSION_DEFINE: 21
+      JDK_VERSION_COMPILE: ${JDK_21}
+  - <<: *publish
+    name: jdk17
+    env:
+      JDK_VERSION_DEFINE: 17
+      JDK_VERSION_COMPILE: ${JDK_17}
+  - <<: *publish
+    name: jdk11
+    env:
+      JDK_VERSION_DEFINE: 11
+      JDK_VERSION_COMPILE: ${JDK_11}
+  - <<: *publish
+    name: jdk8
+    env:
+      JDK_VERSION_DEFINE: 8
+      JDK_VERSION_COMPILE: ${JDK_8}
+
 "(main|master)":
   pull_request:
-    - <<: *publish
+    - <<: *publish-do
   push:
-    - <<: *publish
+    - <<: *publish-do
 $:
   tag_push:
-    - <<: *publish
+    - <<: *publish-do
