@@ -43,9 +43,9 @@ jdk-version-compile: 25
           NEXUS_USERNAME: ${CNB_TOKEN_USER_NAME}
           NEXUS_PASSWORD: ${CNB_TOKEN_ARTIFACTORY}
 
-          NEXUS_SNAPSHOT_ID: ${NEXUS_ID}-snapshot
+          NEXUS_SNAPSHOT_ID: snapshot
           NEXUS_SNAPSHOT_URL: https://maven.cnb.cool/${NEXUS_ID}/maven-snapshot/-/packages/
-          NEXUS_RELEASE_ID: ${NEXUS_ID}-release
+          NEXUS_RELEASE_ID: release
           NEXUS_RELEASE_URL: https://maven.cnb.cool/${NEXUS_ID}/maven-release/-/packages/
 
 "(main|master|dev)":
