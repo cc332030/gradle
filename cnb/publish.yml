@@ -48,11 +48,11 @@ jdk-version-compile: 25
           NEXUS_RELEASE_ID: ${CNB_GROUP_SLUG}-release
           NEXUS_RELEASE_URL: https://maven.cnb.cool/${CNB_GROUP_SLUG}/maven-release/-/packages/
 
-"(main|master)":
-  pull_request:
-    - <<: *publish
+"(main|master|dev)":
   push:
     - <<: *publish
-$:
-  tag_push:
-    - <<: *publish
+#  pull_request.merged:
+#    - <<: *publish
+#$:
+#  tag_push:
+#    - <<: *publish
