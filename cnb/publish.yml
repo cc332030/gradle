@@ -32,9 +32,26 @@ jdk-version-compile: 25
         imports: https://cnb.cool/${CNB_GROUP_SLUG}/secrets/-/blob/main/secrets.yml
         script: |
           echo "JDK_VERSION_COMPILE: ${JDK_VERSION_COMPILE}"
+
+          # 制品库认证自检（只打印状态码、不阻断构建）：
+          # Gradle 发布 SNAPSHOT 前必须先读 maven-metadata.xml（Maven 的 deploy 不需要读，
+          # 故同一凭据下 Maven 能成功而 Gradle 报 401）。这一行用于区分两种成因——
+          # 401 且 credential set 为 yes：CI 令牌对制品库缺「读」权限（需平台侧授权）；
+          # credential set 为 no：凭据没送进 Gradle 进程。
+          echo "probe maven-metadata: $(curl -s -o /dev/null -w '%{http_code}' \
+            -u "${NEXUS_USERNAME}:${NEXUS_PASSWORD}" \
+            "${NEXUS_SNAPSHOT_URL%/}/com/c332030/ctool4j-dependencies/maven-metadata.xml")"
+          echo "credential set: user=$([ -n "${NEXUS_USERNAME}" ] && echo yes || echo no) pass=$([ -n "${NEXUS_PASSWORD}" ] && echo yes || echo no)"
+
           for jdkVersion in ${JDK_VERSION_COMPILE}; do
             echo "run with JDK_VERSION: ${jdkVersion}"
-            JDK_VERSION=${jdkVersion} sh gradlew clean publish
+            # 以「延迟凭据」路径传参（属性 <仓库名>Username / <仓库名>Password），与
+            # build.gradle.kts 的首选分支一致（configuration cache 友好），且认证作用于
+            # 读元数据与上传两类请求。仓库名 = NEXUS_SNAPSHOT_ID / NEXUS_RELEASE_ID 去掉非字母数字：
+            # cc332030_snapshot → cc332030snapshot。
+            JDK_VERSION=${jdkVersion} sh gradlew clean publish \
+              -Pcc332030snapshotUsername="${NEXUS_USERNAME}" -Pcc332030snapshotPassword="${NEXUS_PASSWORD}" \
+              -Pcc332030releaseUsername="${NEXUS_USERNAME}" -Pcc332030releasePassword="${NEXUS_PASSWORD}"
           done
         env:
 
